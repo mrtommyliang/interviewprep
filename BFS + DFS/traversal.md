@@ -54,3 +54,18 @@
   - DFS
 - Finding the shortest path
   - BFS
+
+```
+      9
+    /   \
+   4    20
+  / \   / \
+ 1   6 15  170
+```
+- In order: 
+  - [1, 4, 6, 9, 15, 20, 170]
+- Pre order: 
+  - [9, 4, 1, 6, 20, 15, 170] 
+  - (useful for recreating a tree)
+- Post order: 
+  - [1, 6, 15, 170, 4, 20, 9]

@@ -134,27 +134,54 @@ class BinarySearchTree {
     }
   }
 
-  breadthFirstSearch() {
-    let currentNode = this.root
-    let list = [] // our answer where we'll be inserting the numbers into
-    let queue = [] // keeps track at the level we're at 
-    queue.push(currentNode)
-
-    // nothing left in the queue
-    while (queue.length > 0) {
-      // take the first item in the queue
-      // returns and removes first item in the queue
-      currentNode = queue.shift()
-      list.push(currentNode.value)
-      if (currentNode.left) {
-        queue.push(currentNode.left)
-      }
-      if (currentNode.right) {
-        queue.push(currentNode.right)
-      }
-    }
-    return list
+  depthFirstSearchInOrder() {
+    return traverseInOrder(this.root, [])
   }
+  depthFirstSearchPostOrder() {
+    return traversePostOrder(this.root, [])
+
+  }
+  depthFirstSearchPreOrder() {
+    return traversePreOrder(this.root, [])
+
+  }
+}
+
+const traverseInOrder = (node, list) =>{
+  // if the starting node has a left node, go all the way down until the currentNode has no more children, insert it
+  if (node.left) {
+    traverseInOrder(node.left, list)
+  }
+  list.push(node.value)
+
+  if (node.right) {
+    traverseInOrder(node.right, list)
+  }
+  return list
+}
+
+const traversePreOrder = (node, list) => {
+  list.push(node.value)
+  if (node.left) {
+    traversePreOrder(node.left, list)
+  }
+
+  if (node.right) {
+    traversePreOrder(node.right, list)
+  }
+  return list
+}
+
+const traversePostOrder = (node, list) => {
+  if (node.left) {
+    traversePostOrder(node.left, list)
+  }
+  
+  if (node.right) {
+    traversePostOrder(node.right, list)
+  }
+  list.push(node.value)
+  return list
 }
 
 const tree = new BinarySearchTree()
@@ -165,7 +192,9 @@ tree.insert(20)
 tree.insert(15)
 tree.insert(170)
 tree.insert(1)
-tree.breadthFirstSearch()
+tree.depthFirstSearchInOrder()
+tree.depthFirstSearchPostOrder()
+tree.depthFirstSearchPreOrder()
 // tree.lookup(9)
 // console.log(tree.lookup(9))
 // console.log(tree.lookup(90)) // false
@@ -185,4 +214,13 @@ console.log(JSON.stringify(traverse(tree.root)))
 //     9
 //  4     20
 //1  6  15  170
-// BFS[9, 4, 20, 1, 6, 15, 170]
+/*
+-In order:
+  -[1, 4, 6, 9, 15, 20, 170] -
+  Pre order:
+  -[9, 4, 1, 6, 20, 15, 170] -
+  (useful
+    for recreating a tree) -
+  Post order:
+  -[1, 6, 15, 170, 4, 20, 9]
+*/
