@@ -86,7 +86,7 @@ class BinarySearchTree {
             }
           }
 
-          //Option 2: Right child which doesnt have a left child
+          //Option 2: Right child which doesn't have a left child
         } else if (currentNode.right.left === null) {
           currentNode.right.left = currentNode.left;
           if (parentNode === null) {
@@ -114,7 +114,7 @@ class BinarySearchTree {
             leftmost = leftmost.left;
           }
 
-          //Parent's left subtree is now leftmost's right subtree
+          //Parent's left subtree is now left most's right subtree
           leftmostParent.left = leftmost.right;
           leftmost.left = currentNode.left;
           leftmost.right = currentNode.right;
