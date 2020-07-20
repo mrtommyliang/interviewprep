@@ -1,6 +1,7 @@
-# BFS vs. DFS
+# BFS vs. DFS `O(N)` for both
 
 ## BFS
+- Higher memory requirement
 - Goes down the root, going from left to right
 - ``9 -> 6 -> 12 -> 1 -> 4 -> 34 -> 45``
 ```
@@ -12,11 +13,18 @@
 ```
 - Uses additional memory because it also needs to track the child nodes 
 - Track every node + child node
+### Pros 
+- Good for finding shortest path
+- Closer nodes
+### Cons
+- Requires more memory
 
 ## DFS
+- As deep as possible, starting from the left then going right
+- Depth first
 - Follows one branch all the way down until the target is found or the end is reached
 - When the target can't be found, it goes to the nearest ancestor with an unexplored child
-- ``9 -> 6 -> 1 -> 6 -> 4 -> 12 -> 34 -> 12 -> 45``
+- ``9 -> 6 -> 1 -> 4 -> 12 -> 34 -> 45``
 ```
       9
     /   \
@@ -24,6 +32,13 @@
   / \   / \
  1   4 34  45
 ```
+### Pros 
+- Less memory
+- Does the path exist? Source node to target node
+### Cons
+- Can get slow
+- Lower memory requirement
+
 # Traversal
 - If you know a solution is not far from the root of the tree:
   - BFS
