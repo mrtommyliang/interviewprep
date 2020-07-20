@@ -1,8 +1,8 @@
 # BFS vs. DFS `O(N)` for both
 
 ## BFS
-- Higher memory requirement
 - Goes down the root, going from left to right
+- Higher memory requirement (when visiting a parent node, it has to keep track of child node so it can go back to it later)
 - ``9 -> 6 -> 12 -> 1 -> 4 -> 34 -> 45``
 ```
       9
