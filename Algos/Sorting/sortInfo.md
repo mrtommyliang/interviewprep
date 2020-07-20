@@ -1,0 +1,16 @@
+# Which sorting is best for what situation?
+- Insertion sort
+  - Used only with a few items and mostly sorted
+  - Uses very little space and easy to implement
+- Bubble Sort
+  - Rarely used
+- Selection Sort
+  - Rarely used
+- Merge Sort (*most used*)
+  - Harder to implement
+  - Divide and conquer
+    - O(N log(n)) best case + worst case 
+    - Expensive space complexity O(N)
+- Quick Sort (*most used*)
+  - Harder to implement
+  - If pivot point is not chosen properly, a very slow sort is possible
