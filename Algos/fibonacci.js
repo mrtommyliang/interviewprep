@@ -34,6 +34,8 @@ array[4] + array[5] = 3 + 5 = 8 -> gets pushed into array
 
 
 // O(N) - linear time
+// **************************** ITERATIVE ****************************
+
 const fibonacciIterative = (n) => {
   let array = [0, 1]
 
@@ -45,6 +47,9 @@ const fibonacciIterative = (n) => {
 }
 
 fibonacciIterative(8)
+
+
+// **************************** ITERATIVE WITH MAP ****************************
 
 //O(N)
 const fibItWithMap = (n) => {
@@ -66,6 +71,7 @@ const fibItWithMap = (n) => {
 }
 
 fibItWithMap(5)
+
 /* returns: 
   {
     0: 0
@@ -76,6 +82,8 @@ fibItWithMap(5)
     5: 5
   }
 */
+
+// **************************** RECURSIVE ****************************
 const fibonacciRecursive = (n) => {
   if (n < 2) {
     return n
