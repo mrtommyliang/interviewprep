@@ -27,15 +27,6 @@ class LRUCache {
     this.capacity = capacity;
   }
 
-  get(key) {
-    if (!this.cache.has(key)) return null;
-
-    const val = this.cache.get(key);
-    this.cache.delete(key);
-    this.cache.set(key, val);
-    return this.cache.get(key);
-  };
-
   put(key, value) {
     if (this.cache.has(key)) {
       this.cache.delete(key);
@@ -44,7 +35,15 @@ class LRUCache {
     if (this.cache.size > this.capacity) {
       this.cache.delete(this.cache.keys().next().value); // keys().next().value returns first item's key
     }
-  };
+  }
+
+  get(key) {
+    if (!this.cache.has(key)) return null;
+    const val = this.cache.get(key);
+    this.cache.delete(key);
+    this.cache.set(key, val);
+    return this.cache.get(key);
+  }
 }
 
 /*************************************************************************************************************************/
