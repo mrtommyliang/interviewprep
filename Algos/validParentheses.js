@@ -4,7 +4,7 @@ and ']', determine
 if the input string is valid.
 
 An input string is valid
-if :
+if:
 
 Open brackets must be closed by the same type of brackets.
 Open brackets must be closed in the correct order.
@@ -12,7 +12,7 @@ Note that an empty string is also considered valid.
 */
 
 /*
-Need to implement some sort of stack since we're comparing first in versus last
+Need to implement some sort of stack since we're comparing first in versus last and stacks follow a LIFO principle
 
 
 PROGRAM START takes in a string variable
@@ -48,21 +48,30 @@ const isValid = (inputString) => {
   let arr = inputString.split('')
   const stack = []
 
+  // if input is a string
+  // needs to be on top because it will hit the other if conditions and return false
   if (inputString === '') {
       return true
   }
+  // if input is less than 2 or input doesn't exist or input isn't a string or input is odd numbered
   if (inputString.length < 2 || !inputString || typeof inputString != typeof "" || inputString.length % 2 !== 0) {
     return false
   }
+  // if a value at index 0 does not exist or if brackets object doesn't have the last value of arr
   if (!brackets[arr[0]] || !Object.values(brackets).includes(arr[arr.length - 1])) {
     return false
   }
 
+  // currentStack = i of arr
   for (let currentBracket of arr) {
+    // if the value that is being held exists in the brackets object
     if (brackets[currentBracket]) {
+      // push it into empty array "stack"
       stack.push(currentBracket)
     } else {
+      // instantiate prevBracket variable to remove the last entry in the array that will also be used to compare
       const prevBracket = stack.pop()
+      // if bracketsObject at the key of prevBracket does not equal the value of currentBracket return false
       if (brackets[prevBracket] !== currentBracket) {
         return false
       }
