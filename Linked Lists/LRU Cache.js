@@ -21,95 +21,82 @@ cache.get(3); // returns 3
 cache.get(4); // returns 4
 */
 
-class LRUCache {
-  constructor(capacity) {
-    this.cache = new Map();
-    this.capacity = capacity;
-  }
-
-  put(key, value) {
-    if (this.cache.has(key)) {
-      this.cache.delete(key);
-    }
-    this.cache.set(key, value);
-    if (this.cache.size > this.capacity) {
-      this.cache.delete(this.cache.keys().next().value); // keys().next().value returns first item's key
-    }
-  }
- 
-  get(key) {
-    if (!this.cache.has(key)) return null;
-    const val = this.cache.get(key);
-    this.cache.delete(key);
-    this.cache.set(key, val);
-    return this.cache.get(key);
-  }
-}
-
-/*************************************************************************************************************************/
-
 var LRUCache = function (capacity) {
-  this._capacity = capacity;
-  this._count = 0;
-  this._head = null;
-  this._tail = null;
-  this._hashTable = {};
-}
-
+  this.capacity = capacity;
+  this.cache = {};
+  this.keys = new List();
+  return this;
+};
 
 LRUCache.prototype.get = function (key) {
-  if (this._hashTable[key]) {
-    const { value } = this._hashTable[key];
-    const { prev, next } = this._hashTable[key];
-    if (prev) {
-      prev.next = next;
-    }
-    if (next) {
-      next.prev = prev || next.prev;
-    }
-    if (this._tail === this._hashTable[key]) {
-      this._tail = prev || this._hashTable[key];
-    }
-    this._hashTable[key].prev = null;
-    if (this._head !== this._hashTable[key]) {
-      this._hashTable[key].next = this._head;
-      this._head.prev = this._hashTable[key];
-    }
-    this._head = this._hashTable[key];
-    return value;
-  }
-  return -1;
-}
+  if (!this.cache[key]) return -1;
+
+  var node = this.cache[key];
+  var result = this.cache[key].value;
+
+  // Delete node based on reference here
+  this.keys.remove(node);
+  delete this.cache[key];
+  this.put(key, result);
+
+  return result;
+};
 
 LRUCache.prototype.put = function (key, value) {
-  if (this._hashTable[key]) {
-    this._hashTable[key].value = value;
-    this.get(key);
+  if (this.cache[key]) {
+    this.keys.remove(this.cache[key]);
+  }
+
+  if (this.keys.size === this.capacity) {
+    var tail = this.keys.tail;
+    this.keys.remove(tail);
+
+    if (this.cache[tail.key]) {
+      delete this.cache[tail.key];
+    }
+  }
+  this.keys.push(key, value);
+  this.cache[key] = this.keys.head;
+};
+
+function Node(key, value) {
+  this.key = key;
+  this.value = value;
+  this.next = null;
+  this.prev = null;
+  return this;
+}
+
+function List() {
+  this.head = null;
+  this.tail = null;
+  this.size = 0;
+  return this;
+}
+
+List.prototype.push = function (key, value) {
+  var this = this;
+  const node = new Node(key, value);
+
+  if (!this.head) {
+    this.head = node;
+    this.tail = node;
   } else {
-    this._hashTable[key] = {
-      key,
-      value,
-      prev: null,
-      next: null
-    };
-    if (this._head) {
-      this._head.prev = this._hashTable[key];
-      this._hashTable[key].next = this._head;
-    }
-    this._head = this._hashTable[key];
-    if (!this._tail) {
-      this._tail = this._hashTable[key];
-    }
-    this._count += 1;
+    node.next = this.head;
+    this.head.prev = node;
+    this.head = node;
   }
-  if (this._count > this._capacity) {
-    let removedKey = this._tail.key;
-    if (this._tail.prev) {
-      this._tail.prev.next = null;
-      this._tail = this._tail.prev;
-      this._hashTable[removedKey].prev = null;
-    }
-    delete this._hashTable[removedKey];
-    this._count -= 1;
+  this.size++;
+};
+
+List.prototype.remove = function (node) {
+  if (this.head === node) {
+    this.head = this.head.next;
+  } else if (this.tail === node) {
+    this.tail = this.tail.prev;
+  } else {
+    node.prev.next = node.next;
+    node.next.prev = node.prev;
   }
+  this.size--;
 };
