@@ -4,6 +4,7 @@ You are given a doubly linked list which in addition to the next and previous po
 Flatten the list so that all the nodes appear in a single-level, doubly linked list. You are given the head of the first level of the list.
 
 [1--2--3--7--8--11--12--9--10--4--5--6--null]
+
   1---2---3---4---5---6--NULL
           |
           7---8---9---10--NULL
@@ -11,7 +12,7 @@ Flatten the list so that all the nodes appear in a single-level, doubly linked l
               11--12--NULL
 
 */
-
+// Constructor that holds all the values that we'll be passing
 class Node {
   constructor(val, prev, next, child) {
     this.val = val
@@ -19,30 +20,47 @@ class Node {
     this.next = next
     this.child = child
   }
-};
+}
+
 
 const flatten = (head) => {
-  if (!head) return null;
-  let dummyHead = new Node(0, null, head, null);
+  // instantiate stack array
+  let stack = [] 
+  // instantiate current to be head (this is where it'll begin the logic)
+  let current = head
 
-  let stack = [head];
-  let current = dummyHead;
-  let prev = null;
-
-  while (stack.length != 0) {
-    current = stack.pop();
-    if (prev) {
-      current.prev = prev;
-      prev.next = current;
-    }
-    if (current.next != null) stack.push(current.next);
-    if (current.child != null) { // has a child
-      stack.push(current.child);
-      current.child = null; // remove child reference
-    }
-    prev = current;
+  // if head doesn't exist, return whatever was inputted
+  if (!head){
+    return head
   }
-  return dummyHead.next;
-};
+  
+  // while current exists
+  while (current) {
+    // if the child of current exists
+    if (current.child) {
+      // if the next value of current exists
+      if (current.next) {
+        // push the the next value of current into the stack
+        stack.push(current.next) 
+      }
+      // reassign the next value to be the child of the current value
+      current.next = current.child
+      // reassign the value before current to be the new current
+      current.next.prev = current
+      // child node is null
+      current.child = null 
+      // if current.next doesn't exist or the length of stack has values
+    } else if (!current.next && stack.length != 0) { 
+      // current.next will be equal to the stack's value and also pop it out of the stack
+        current.next = stack.pop()
+        // reassign the value before current to be the new current
+        current.next.prev = current
+    }
+    // move the pointer forward
+    current = current.next
+  }
+  return head 
+}
 
-flatten([1, 2, 3, 4, 5, 6, null, null, null, 7, 8, 9, 10, null, null, 11, 12])
+console.log(flatten([1, 2, 3, 4, 5, 6, null, null, null, 7, 8, 9, 10, null, null, 11, 12]))
+

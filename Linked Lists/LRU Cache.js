@@ -62,7 +62,7 @@ INSTANTIATE PUT takes in a key value input
   if size is equal to the set capacity
     remove the head key from mapObject
     call the deleteNode method to remove the head node from cache
-  assign the new key in mapObject to have the values of linkedlistnode constructor (key, value, prev, next)
+  assign the new key in mapObject to have the values of linkedListNode constructor (key, value, prev, next)
   add a new node of the values of the mapObject key values
 END INSTANTIATE
 
