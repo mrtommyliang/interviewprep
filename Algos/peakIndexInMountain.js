@@ -16,9 +16,12 @@ Output: 1
 */
 
 const peakIndexInMountainArray = (A) => {
+  // if input doesn't exist, return -1
   if (!A.length) return -1;
-  
+
+  // itereate through the A input starting at index of 1 (compare previous and next)
   for (let i = 1; i < A.length - 1; i++) {
+    // compare previous and next
     if (A[i - 1] < A[i] && A[i + 1] < A[i]) return i;
   }
   return -1;
