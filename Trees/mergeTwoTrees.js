@@ -19,8 +19,8 @@ You need to merge them into a new binary tree. The merge rule is that if two nod
  */
 const mergeTrees = (t1, t2) => {
   // if one of the nodes is missing, return the other
-  if (t1 === null) return t2
-  if (t2 === null) return t1
+  if (!t1 || !t2) return t1 || t2
+  if (!t1 && !t2) return null
   
   // if both nodes exist, sum up the values
   t1.val += t2.val
