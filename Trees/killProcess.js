@@ -35,46 +35,32 @@ let ppid = [3, 0, 5, 3]
 let kill = 5
 
 const killProcess = (pid, ppid, kill) => {
-  let map = new Map()
+  let tree = {}
+  let processesKilled = [kill]
 
-  // put all values into two map maps
-  for (let i = 0; i < pid.length - 1; i++) {
-    // set each PID as key and PPID as value
-    // if the ppid exists within the map
-    if (map.get(ppid[i])) {
-      // instantiate child to be each value of the ppid
-      let child = map.get(ppid[i])
-      child.push(pid[i])
-      map.set(ppid[i], child)
+  // add all immediate children to the tree hash
+  for (let i = 0; i < pid.length; i++) {
+    let curr = pid[i]
+    let parent = ppid[i]
+    if (!tree[parent]) {
+      tree[parent] = [curr]
     } else {
-      let child = []
-      child.push(pid[i])
-      map.set(ppid[i], child)
+      tree[parent].push(curr)
     }
   }
 
-  let killList = []
-  killList.push(kill)
+  // if the node to kill has no children, end here
+  if (!tree[kill]) return processesKilled
 
-  let children = []
-  if(map.get(kill)) {
-    children = map.get(kill)
-  }
-
-  // Using a queue, insert each children to kill their processes until they run out
-  while(children.length > 0) {
-    let newTarget = children.shift()
-    killList.push(newTarget)
-
-    if(map.get(newTarget)) {
-      let newChildren = map.get(newTarget)
-
-      // Insert each list of newChildren into the existing chilren
-      for(let i = 0; i < newChildren.length - 1; i++) {
-        children.push(newChildren[i])
-      }
+  // else, DFS it's children
+  let children = tree[kill]
+  while (children.length) {
+    let toKill = children.pop()
+    processesKilled.push(toKill)
+    if (tree[toKill]) {
+      children = [...children, ...tree[toKill]]
     }
   }
-  return killList
+  return processesKilled
 }
 
