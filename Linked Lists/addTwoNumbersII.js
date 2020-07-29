@@ -23,29 +23,33 @@ function ListNode(val, next) {
 */
 
 const addTwoNumbers = (l1, l2) => {
-  let stack1 = []
-  let stack2 = []
+  let digits1 = []
+  let digits2 = []
 
-  while(l1) {
-    stack1.push(l1.val)
-    l1 = l1.next
+  // fills in the digits from each list
+  for(let n = l1; n !== null; n = n.next){
+    digits1.push(n.val)
+  }
+  
+  for (let n = l2; n !== null; n = n.next) {
+    digits2.push(n.val)
   }
 
-  while(l2) {
-    stack2.push(l2.val)
-    l2 = l2.next
+  // sum the digits in reverse order from least significant to first
+  let prev = null
+  let carry = 0
+  // while digits1 or digits2 or carry exists
+  // || 0 represents a boolean conversion if one array is shorter than the other while popping, when it reaches a place value where there is no number, it'll assign that value to be 0 
+  while(digits1.length || digits2.length || carry) {
+    let val1 = digits1.pop() || 0
+    let val2 = digits2.pop() || 0
+    let sum = val1 + val2 + carry
+    // if (sum > 9) { return 1 } else { return 0} 
+    carry = (sum > 9) ? 1 : 0
+    
+    const newNode = new ListNode(sum % 10)
+    newNode.next = prev
+    prev = newNode
   }
-
-  let l3 = new ListNode(0)
-  while (stack1.length || stack2.length) {
-    let sum = 0
-    if (stack1.length) sum += stack1.pop
-    if (stack2.length) sum += stack2.pop
-    sum += l3.val;
-    l3.val = sum % 10
-    let head = new ListNode(Math.floor(sum/10))
-    head.next = l3
-    l3 = head
-  }
-  return (l3.val === 0) ? l3.next : l3
+  return prev
 }
