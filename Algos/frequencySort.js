@@ -41,17 +41,17 @@ ITERATE through map object
 
 const frequencySort = (s) => {
   let map = {}
-  let result = ''
   
   for(let i = 0; i < s.length; i++) {
-    const char = s.charAt(i)
+    let char = s.charAt(i)
     map[char] = map[char] + 1 || 1
   }
   
-  let sorted = Object.keys(map).sort((a, b) => {map[b] - map[a]})
+  let sorted = Object.keys(map).sort((a, b) => map[b] - map[a])
+  let result = ''
 
   for(let i = 0; i < sorted.length; i++) {
-    const char = sorted[i]
+    let char = sorted[i]
     result += char.repeat(map[char])
   }
   return result
