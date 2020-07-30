@@ -1,5 +1,3 @@
-// think of classes as something that you want to make a "copy" of 
-
 // instantiation
 class Player {
   constructor(name, type) {
@@ -10,7 +8,6 @@ class Player {
     console.log(`Hi I am ${this.name}, and I am a ${this.type}`)
   }
 }
-// constructor function will create the name and type properties on a player object
 
 class Wizard extends Player {
   constructor(name, type) {
