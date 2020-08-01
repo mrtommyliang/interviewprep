@@ -34,18 +34,17 @@ The number of nodes in the given tree is less than 6000.
 
 const connect = (root) => {
   if (!root) return root
+  if (!root.left && !root.right) return root
+
   let queue = [root]
-  let level = []
 
   while (queue.length) {
-    const node = queue.shift()
-    node.next = queue[0] || null
-    if (node.left != null) {level.push(node.left)}
-    if (node.right != null) {level.push(node.right) }
-
-    if (queue.length === 0) {
-      queue = level
-      level = []
+    let length = queue.length
+    for (let i = 0; i < length; i++) {
+      let node = queue.shift()
+      if (i != length-1) node.next = queue[0]
+      if (node.left) queue.push(node.left)
+      if (node.right) queue.push(node.right)
     }
   }
   return root
