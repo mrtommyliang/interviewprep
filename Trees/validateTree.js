@@ -32,7 +32,7 @@ function TreeNode(val, left, right) {
   this.right = (right === undefined ? null : right)
 }
 
-
+// recursive approach
 const isValidBST = (root) => {
   if (!root) {
     return true
@@ -49,5 +49,41 @@ const isValidBST = (root) => {
   }
   return dfs(root, null, null);
 }
+
+
+// iterative approach
+var isValidBST = function (root) {
+  if (root == null) {
+    return true;
+  }
+
+  const stack = [];
+
+  stack.push({
+    node: root,
+    min: Number.MIN_SAFE_INTEGER,
+    max: Number.MAX_SAFE_INTEGER
+  });
+
+  while (stack.length !== 0) {
+    const { node, min, max } = stack.pop();
+    if (node.val <= min || node.val >= max) return false;
+    if (node.right) {
+      stack.push({
+        node: node.right,
+        min: node.val,
+        max,
+      })
+    }
+    if (node.left) {
+      stack.push({
+        node: node.left,
+        min,
+        max: node.val
+      })
+    }
+  }
+  return true;
+};
 
 //https://www.youtube.com/watch?v=kR5AxWHa9nc good explanation
