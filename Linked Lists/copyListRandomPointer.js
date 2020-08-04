@@ -59,7 +59,7 @@ class Node {
   }
 }
 
-const copyRandomList = function (head) {
+const copyRandomList = (head) => {
   // if head node does not exist
   if (!head) return null
 
