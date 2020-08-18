@@ -214,3 +214,54 @@ const defineFirstArg = (func, arg) => {
 const subtract = function(big, small) {return big-small}
 const subFrom20 =  defineFirstArg(subtract, 20)
 console.log(subFrom20(5));
+
+/************************************************************************/
+
+// Create a function dateStamp that accepts a function and returns a function. The returned function will accept whatever arguments the passed-in function accepts and return an object with a date key whose value is today's date (not including the time) represented as a human-readable string (see the Date object for conversion methods), and an output key that contains the result from invoking the passed-in function.
+
+const dateStamp = (callback) => {
+  let today = new Date()
+  return (...args) => {
+    return {
+      date: today.toDateString(),
+      output: callback(...args)
+    }
+  }
+}
+
+const stampedMultBy2 = dateStamp(n => n * 2);
+console.log(stampedMultBy2(4)); // should log: { date: (today's date), output: 8 }
+console.log(stampedMultBy2(6)); // should log: { date: (today's date), output: 12 }
+
+/************************************************************************/
+
+// Create a function censor that accepts no arguments. censor will return a function that will accept either two strings, or one string. When two strings are given, the returned function will hold onto the two strings as a pair, for future use. When one string is given, the returned function will return the same string, except all instances of a first string (of a saved pair) will be replaced with the second string (of a saved pair).
+
+// declare function censor that takes no arguments
+// create variable storage to store key, value pair
+// return function tha takes up to two arguments
+// check to see how many strings are passed into the returned function
+  // if two strings are passed in, store as key, value pair in storage obj
+  // if one string passed, modify the string to replace any instance of the keys in the storage
+// return modified string
+
+
+const censor = () => {
+  let storage = {}
+
+  return function(string1, string2) {
+    if(string2) {
+      storage[string1] = string2
+      return
+    }
+    Object.keys(storage).forEach(key => {
+      string1 = string1.replace(key, storage[key])
+    })
+    return string1
+  }
+}
+
+const changeScene = censor();
+changeScene('dogs', 'cats');
+changeScene('quick', 'slow');
+console.log(changeScene('The quick, brown fox jumps over the lazy dogs.')); // should log: 'The slow, brown fox jumps over the lazy cats.'
