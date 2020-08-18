@@ -112,3 +112,105 @@ const afterCalled = after(3, called);
 console.log(afterCalled('world')); // -> undefined is printed
 console.log(afterCalled('world')); // -> undefined is printed
 console.log(afterCalled('world')); // -> 'hello world' is printed
+
+/************************************************************************/
+// Write a function delay that accepts two arguments, a callback and the wait time in milliseconds. Delay should return a function that, when invoked waits for the specified amount of time before executing. HINT - research setTimeout();
+
+const delay = (inputFunc, waitTime, ...args) => {
+  return function () {
+    return setTimeout(inputFunc, waitTime, ...args)
+  }
+}
+
+let count = 0;
+const delayedFunc = delay(() => count++, 1000);
+delayedFunc();
+console.log(count); 												 // should print '0'
+setTimeout(() => console.log(count), 1000); // should print '1' after 1 second
+
+/************************************************************************/
+
+
+// Create a function saveOutput that accepts a function (that will accept one argument), and a string (that will act as a password). saveOutput will then return a function that behaves exactly like the passed-in function, except for when the password string is passed in as an argument. When this happens, the returned function will return an object with all previously passed-in arguments as keys, and the corresponding outputs as values
+
+// instantiate a map variable
+// instantiate a function that takes in one argument
+// if string input doesn't equal val input
+// assign output variable to be the result of the callback with val as arg
+// output will then equal the key in map
+// return output
+// otherwise return the object
+// return function
+
+const saveOutput = (callback, string) => {
+  let map = {}
+
+  const myFunction = (val) => {
+    if (string !== val) {
+      let output = callback(val)
+      map[val] = output
+      return output
+    } else {
+      return map
+    }
+  }
+  return myFunction
+}
+
+
+const multiplyBy2 = function (num) { return num * 2; };
+const multBy2AndLog = saveOutput(multiplyBy2, 'boo');
+// input will be used as key, value will be key * 2
+console.log(multBy2AndLog(2)); // should log: 4
+console.log(multBy2AndLog(9)); // should log: 18
+console.log(multBy2AndLog('boo')); // should log: { 2: 4, 9: 18 }
+
+/************************************************************************/
+
+// Create a function cycleIterator that accepts an array, and returns a function. The returned function will accept zero arguments. When first invoked, the returned function will return the first element of the array. When invoked a second time, the returned function will return the second element of the array, and so forth. After returning the last element of the array, the next invocation will return the first element of the array again, and continue on with the second after that, and so forth.
+
+/*
+Instantiate cycleIterator to take in an array input
+  Instantiate index variable to keep track of which index we're at
+  Instantiate incrementDay variable
+    Instantiate result variable to be the value in the array using index as its place holder
+    IF the value of index is greater than the array's length,
+      RESET index to be zero
+    END if
+    RETURN result variable
+  END incrementDay
+  return incrementDay function
+
+*/
+
+const cycleIterator = (array) => {
+  let index = 0
+
+  const incrementDay = () => {
+    let result = array[index++]
+    if(index >= array.length) index = 0
+    return result
+  }
+  return incrementDay
+}
+
+const threeDayWeekend = ['Fri', 'Sat', 'Sun'];
+const getDay = cycleIterator(threeDayWeekend);
+console.log(getDay()); // should log: 'Fri'
+console.log(getDay()); // should log: 'Sat'
+console.log(getDay()); // should log: 'Sun'
+console.log(getDay()); // should log: 'Fri'
+
+/************************************************************************/
+
+// Create a function defineFirstArg that accepts a function and an argument. Also, the function being passed in will accept at least one argument. defineFirstArg will return a new function that invokes the passed-in function with the passed-in argument as the passed-in function's first argument. Additional arguments needed by the passed-in function will need to be passed into the returned function.
+
+const defineFirstArg = (func, arg) => {
+  return function() {
+    return func(input, ...arguments)
+  }
+}
+
+const subtract = function(big, small) {return big-small}
+const subFrom20 =  defineFirstArg(subtract, 20)
+console.log(subFrom20(5));
