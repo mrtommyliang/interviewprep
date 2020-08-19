@@ -239,7 +239,7 @@ console.log(stampedMultBy2(6)); // should log: { date: (today's date), output: 1
 
 // declare function censor that takes no arguments
 // create variable storage to store key, value pair
-// return function tha takes up to two arguments
+// return function that takes up to two arguments
 // check to see how many strings are passed into the returned function
   // if two strings are passed in, store as key, value pair in storage obj
   // if one string passed, modify the string to replace any instance of the keys in the storage
@@ -249,15 +249,15 @@ console.log(stampedMultBy2(6)); // should log: { date: (today's date), output: 1
 const censor = () => {
   let storage = {}
 
-  return function(string1, string2) {
-    if(string2) {
-      storage[string1] = string2
+  return function(s1, s2) {
+    if(s2) {
+      storage[s1] = s2
       return
     }
-    Object.keys(storage).forEach(key => {
-      string1 = string1.replace(key, storage[key])
-    })
-    return string1
+  Object.keys(storage).forEach(key => {
+    s1 = s1.replace(key, storage[key])
+  })
+  return s1
   }
 }
 
