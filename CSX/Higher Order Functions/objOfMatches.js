@@ -6,13 +6,23 @@ const objOfMatches = (arr1, arr2, callback) => {
   let result = {}
   let curKey, curVal
   for (let i = 0; i < arr1.length; i++) {
-    let curKey = arr1[i]
-    let curVal = arr2[i]
+    curKey = arr1[i]
+    curVal = arr2[i]
     if (callback(curKey) === curVal) {
       result[curKey] = callback(curVal)
     }
   }
   return result
+}
+
+const objOfMatches = (array1, array2, callback) => {
+  let obj = {}
+  for (let i = 0; i < array1.length; i++) {
+    if (callback(array1[i]) === array2[i]) {
+      obj[array1[i]] = array2[i]
+    }
+  }
+  return obj
 }
 
 // Uncomment these to check your work!
