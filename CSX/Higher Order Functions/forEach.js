@@ -28,9 +28,17 @@ const map = (array, callback) => {
   return result
 }
 
-
-// Uncomment these to check your work!
 console.log(typeof forEach); // should log: 'function'
 forEach(['a', 'b', 'c'], i => console.log(i)); // should log: 'a', 'b', 'c'
 console.log(typeof map); // should log: 'function'
 console.log(map([3, 4, 5], n => n - 2)); // should log: [1, 2, 3]
+
+
+const concatABC = (array) => {
+  let result = array.reduce((acc, curVal) => {
+    return acc + curVal
+  }, '')
+  return result
+}
+
+concatABC(['a', 'b', 'c', 'd'])

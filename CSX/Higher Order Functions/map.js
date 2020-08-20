@@ -20,6 +20,21 @@ const map = (array, callback) => {
   return arr
 }
 
-console.log(typeof subtractTwo); // should log: 'function'
-console.log(typeof map); // should log: 'function'
 console.log(map([3, 4, 5], subtractTwo)); // should log: [ 1, 2, 3 ]
+
+/******************************************************************************************/
+
+const subtractTwo = (num) => {
+  return num - 2
+}
+
+const reduced = (array, callback) => {
+  let result = array.reduce((acc, cur) => {
+    const num = callback(cur)
+    acc.push(num)
+    return acc
+  }, [])
+  return result
+}
+
+console.log(reduced([3, 4, 5], subtractTwo)); // should log: [ 1, 2, 3 ]

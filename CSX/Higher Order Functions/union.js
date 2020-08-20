@@ -13,7 +13,6 @@ const union = (arrays) => {
 }
 
 
-// Uncomment these to check your work!
 const arr1 = [5, 10, 15];
 const arr2 = [15, 88, 1, 5, 7];
 const arr3 = [100, 15, 10, 1, 5];

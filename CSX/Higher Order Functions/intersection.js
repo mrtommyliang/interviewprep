@@ -14,3 +14,21 @@ const intersection = (input) => {
   })
   return common
 }
+console.log(intersection([arr1, arr2, arr3])); // should log: [5, 15]
+
+/******************************************************************************************/
+
+const intersection2 = (input) => {
+  let commonVals = input.reduce((acc, curVal) => {
+    return acc.filter((ele) => {
+      return curVal.includes(ele)
+    })
+  })
+  return commonVals
+}
+
+// a             b               common
+// 5,10,15,20    15,88,1,5,7     5,15
+// 5,15          1,10,15,5,20    5, 15
+
+console.log(intersection2([arr1, arr2, arr3])); // should log: [5, 15]

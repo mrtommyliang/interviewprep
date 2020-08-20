@@ -50,7 +50,7 @@ function factorial(num) {
 
 // Param as storage
 
-function factorial(num, product = 4) {
+function factorial(num, product = 1) {
   if (num === 1) return product
   let newProduct = product * num
   let newNum = num - 1
