@@ -27,7 +27,6 @@ console.log(multiMap(items, functions));
 
 /*******************************************************************************************/
 
-
 const multiMap = (arr, callback) => {
   return arr.reduce((acc, cur) => {
     acc[cur] = callback.reduce((array, func) => {

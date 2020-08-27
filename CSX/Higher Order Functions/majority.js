@@ -15,7 +15,15 @@ const majority = (arr, callback) => {
     return true
   } else return false
 }
-// Uncomment these to check your work!
+
+const majority2 = (arr, callback) => {
+  let odd = even = 0
+  arr.reduce((acc, curVal) => {
+    callback(curVal) ? odd++ : even++
+  }, 0)
+  return (odd > even) ? true : false
+}
+
 const isOdd = function (num) { return num % 2 === 1; };
 console.log(majority([1, 2, 3, 4, 5], isOdd)); // should log: true
 console.log(majority([2, 3, 4, 5], isOdd)); // should log: false
