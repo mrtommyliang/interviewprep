@@ -7,7 +7,9 @@ Construct a function union that takes an input array of arrays, compares each ar
 
 
 const union = (arrays) => {
-  let combined = arrays.reduce((acc, curVal) => [...acc, ...curVal], [])
+  let combined = arrays.reduce((acc, cur) => {
+    return [...acc, ...cur]
+  }, [])
   let unique = [...new Set(combined)]
   return unique
 }

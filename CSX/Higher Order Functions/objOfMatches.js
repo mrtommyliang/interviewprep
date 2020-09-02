@@ -25,7 +25,6 @@ const objOfMatches = (array1, array2, callback) => {
   return obj
 }
 
-// Uncomment these to check your work!
 const arr1 = ['hi', 'howdy', 'bye', 'later', 'hello'];
 const arr2 = ['HI', 'Howdy', 'BYE', 'later', 'HELLO'];
 function uppercaser(str) { 
