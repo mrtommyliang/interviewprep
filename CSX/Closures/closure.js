@@ -35,7 +35,6 @@ const createFunctionWithInput = (stringInput) => {
   }
   return inputReturn
 }
-// UNCOMMENT THESE TO TEST YOUR WORK!
 const sampleFunc = createFunctionWithInput('sample');
 console.log(sampleFunc()); // should log: 'sample'
 const helloFunc = createFunctionWithInput('hello');
@@ -97,15 +96,21 @@ console.log(addByTwoOnce(9001));  //should log 7
 //Write a function after that takes the number of times the callback needs to be called before being executed as the first parameter and the callback as the second parameter.
 
 const after = (repeater, callback) => {
+  // create counter variable
   let counter = 0
-  return function(...args) {
+  // create inner function that will take in any amount of inputs
+  const inner = (...args) => {
+    // increment counter everytime function is called
     counter++
-    if(counter >= repeater) {
+    // if counter is greater than or equal to the value of repeater
+    if (counter >= repeater) {
+      // return the callback function with inputs
       return callback(...args)
     }
   }
-}
-
+  // return inner function defintion
+  return inner
+} 
 const called = function (string) { return ('hello ' + string); };
 const afterCalled = after(3, called);
 
@@ -135,28 +140,35 @@ setTimeout(() => console.log(count), 1000); // should print '1' after 1 second
 
 // instantiate a map variable
 // instantiate a function that takes in one argument
-// if string input doesn't equal val input
-// assign output variable to be the result of the callback with val as arg
-// output will then equal the key in map
-// return output
-// otherwise return the object
+  // if string input doesn't equal val input
+    // assign output variable to be the result of the callback with val as arg
+    // output will then equal the key in map
+    // return output
+  // otherwise return the object
 // return function
 
 const saveOutput = (callback, string) => {
+  // instantiate a map variable
   let map = {}
 
-  const myFunction = (val) => {
-    if (string !== val) {
-      let output = callback(val)
-      map[val] = output
+  // instantiate a function that takes in one argument
+  const inner = (pw) => {
+    // if string input doesn't equal val input
+    if (string !== pw) {
+      // assign output variable to be the result of the callback with val as arg
+      let output = callback(pw)
+      // output will then equal the key in map
+      map[pw] = output
+      // return output
       return output
+      // otherwise return the object
     } else {
       return map
     }
   }
-  return myFunction
+  // return function
+  return inner
 }
-
 
 const multiplyBy2 = function (num) { return num * 2; };
 const multBy2AndLog = saveOutput(multiplyBy2, 'boo');
@@ -187,7 +199,8 @@ const cycleIterator = (array) => {
   let index = 0
 
   const incrementDay = () => {
-    let result = array[index++]
+    let result = array[index]
+    index++
     if(index >= array.length) index = 0
     return result
   }

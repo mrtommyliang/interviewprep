@@ -16,6 +16,10 @@ const intersection = (input) => {
 }
 console.log(intersection([arr1, arr2, arr3])); // should log: [5, 15]
 
+// use the reduce method to condense multiple arrays
+  // filter out the the current value of the first array
+    // 	check to see if the following values contains those values
+
 /******************************************************************************************/
 
 const intersection2 = (input) => {

@@ -39,3 +39,13 @@ should log:
   hello: 'HELLO' 
 }
 */
+
+/*
+******************* assuming both arrays are same length ***********************
+  create empty obj, obj
+  iterate through the arrays
+    if the callback value of itereated  array1 is the same as the value at itereated array 2
+    the key of obj will be the array1 that matches array2 and the value will be array2 
+  end iterate
+  return obj variable 
+*/

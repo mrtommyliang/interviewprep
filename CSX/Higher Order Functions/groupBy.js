@@ -2,22 +2,22 @@
 
 
 const groupBy = (array, callback) => {
+  // create empty obj variable, map
   let map = {}
-
-  for (let i of array) {
-    // function call for each value in array input
-    let key = callback(i)
-    // if it doesn't exist, create an empty array
-    if (!map[key]) {
-      map[key] = []
-    }
-    //push values of array into sub array
-    map[key].push(i)
+  // itereate through the array
+  for (let vals of array) {
+    // instantiate a variable, cb which is the values of the array passed to the callback function
+    let cb = callback(vals)
+    // if those values don't exist in map, keys will hold an empty array
+    if (!map[cb]) map[cb] = []
+    // push the values of the array into the the empty array
+    map[cb].push(vals)
+    // move on to the next number
   }
+  // return the map object
   return map
 }
 
-// Uncomment these to check your work!
 const decimals = [1.3, 2.1, 2.4];
 const floored = function (num) { return Math.floor(num); };
 console.log(groupBy(decimals, floored)); // should log: { 1: [1.3], 2: [2.1, 2.4] }

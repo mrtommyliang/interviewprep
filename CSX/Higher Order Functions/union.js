@@ -14,6 +14,11 @@ const union = (arrays) => {
   return unique
 }
 
+const union2 = (arrays) => {
+  let combined = arrays.reduce((acc, curVal) => [...acc, ...curVal], [])
+  let unique = [...new Set(combined)]
+  return unique
+}
 
 const arr1 = [5, 10, 15];
 const arr2 = [15, 88, 1, 5, 7];
