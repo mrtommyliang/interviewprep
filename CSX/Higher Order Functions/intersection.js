@@ -23,9 +23,9 @@ console.log(intersection([arr1, arr2, arr3])); // should log: [5, 15]
 /******************************************************************************************/
 
 const intersection2 = (input) => {
-  let commonVals = input.reduce((acc, curVal) => {
+  let commonVals = input.reduce((acc, cur) => {
     return acc.filter((ele) => {
-      return curVal.includes(ele)
+      return cur.includes(ele)
     })
   })
   return commonVals

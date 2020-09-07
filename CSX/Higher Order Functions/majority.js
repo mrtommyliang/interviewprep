@@ -3,8 +3,8 @@ Create a function majority that accepts an array and a callback. The callback wi
 */
 
 const majority = (arr, callback) => {
-  let odd = 0
-  let even = 0
+  let odd = 0,
+      even = 0
 
   for (let i = 0; i < arr.length; i++) {
     if (callback(arr[i])) {
@@ -17,9 +17,10 @@ const majority = (arr, callback) => {
 }
 
 const majority2 = (arr, callback) => {
-  let odd = even = 0
-  arr.reduce((acc, curVal) => {
-    callback(curVal) ? odd++ : even++
+  let odd = 0
+  let even = arr.reduce((acc, cur) => {
+    callback(cur) ? odd++ : acc++
+    return acc
   }, 0)
   return (odd > even) ? true : false
 }

@@ -7,16 +7,19 @@ const countBy = (array, callback) => {
     // key will return either 'odd' || 'even'
     // using that value, we'll assign that to the obj
     let key = callback(i)
+    // if the key doesn't exist in obj
     if (obj[key] === undefined) {
+      // give it a value of 1 to start
       obj[key] = 1
     } else {
+      // otherwise, increment the value
       obj[key] += 1
     }
   }
+  // return the obj
   return obj
 }
 
-// Uncomment these to check your work!
 function evenOdd(n) {
   if (n % 2 === 0) return 'even';
   else return 'odd';
