@@ -14,6 +14,17 @@ const eitherFilter = (array, callback1, callback2) => {
   return result
 }
 
+
+/*
+const eitherFilter = (array, callback1, callback2) => {
+	return array.reduce((acc, cur) => {
+    if(callback1(cur)) acc.push(cur)
+    if(callback2(cur)) acc.push(cur)
+    return acc
+  }, [])
+}
+*/
+
 const arrOfNums = [10, 35, 105, 9];
 const integerSquareRoot = n => Math.sqrt(n) % 1 === 0;
 const over100 = n => n > 100;

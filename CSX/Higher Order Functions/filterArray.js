@@ -1,10 +1,21 @@
-function filterArray(array, callback) {
+const filterArray = (array, callback) => {
   const newArray = [];
-  for (let i = 0; i < array.length; i += 1) {
+  for (let i = 0; i < array.length; i++) {
     if (callback(array[i])) newArray.push(array[i]);
   }
   return newArray;
 }
+
+/* alternative 
+
+const filterArray = (array, callback) => {
+	return array.reduce((acc, cur) => {
+		if(callback(cur)) acc.push(callback(cur))
+    return acc
+  }, [])
+}
+*/
+
 const arrOfNums = [1, 2, 3, 4, 5];
 
 const func1 = (num) => {

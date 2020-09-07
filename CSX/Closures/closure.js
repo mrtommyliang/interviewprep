@@ -251,12 +251,12 @@ console.log(stampedMultBy2(6)); // should log: { date: (today's date), output: 1
 // Create a function censor that accepts no arguments. censor will return a function that will accept either two strings, or one string. When two strings are given, the returned function will hold onto the two strings as a pair, for future use. When one string is given, the returned function will return the same string, except all instances of a first string (of a saved pair) will be replaced with the second string (of a saved pair).
 
 // declare function censor that takes no arguments
-// create variable storage to store key, value pair
-// return function that takes up to two arguments
-// check to see how many strings are passed into the returned function
-  // if two strings are passed in, store as key, value pair in storage obj
-  // if one string passed, modify the string to replace any instance of the keys in the storage
-// return modified string
+  // create variable storage to store key, value pair
+  // return function that takes up to two arguments
+    // check to see how many strings are passed into the returned function
+    // if two strings are passed in, store as key, value pair in storage obj
+    // if one string passed, modify the string to replace any instance of the keys in the storage
+  // return modified string
 
 
 const censor = () => {
