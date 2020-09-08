@@ -71,16 +71,22 @@ addByFour(10); //should return 14
 // Write a function once that accepts a callback as input and returns a function. When the returned function is called the first time, it should call the callback and return that output. If it is called any additional times, instead of calling the callback again it will simply return the output value from the first time it was called.
 
 const once = (callback) => {
-  let hasBeenCalled = false
+  // create result variable
   let result
-  const oncifiedCallback = (...args) => {
+  // create hasBennCalled variable that will hold a boolean
+  let hasBeenCalled = false
+  // create inner function that takes in any amount of inputs
+  const inner = (...args) => {
+    // check whether hasBeenCalled is true or false, if false
     if (!hasBeenCalled) {
+      // result will equal the callback value using args as argument
       result = callback(...args)
+      // hasBeenCalled reassigned to true
       hasBeenCalled = true
     }
     return result
   }
-  return oncifiedCallback
+  return inner
 }
 
 const addByTwoOnce = once(function (num) {
@@ -250,28 +256,46 @@ console.log(stampedMultBy2(6)); // should log: { date: (today's date), output: 1
 
 // Create a function censor that accepts no arguments. censor will return a function that will accept either two strings, or one string. When two strings are given, the returned function will hold onto the two strings as a pair, for future use. When one string is given, the returned function will return the same string, except all instances of a first string (of a saved pair) will be replaced with the second string (of a saved pair).
 
-// declare function censor that takes no arguments
-  // create variable storage to store key, value pair
-  // return function that takes up to two arguments
-    // check to see how many strings are passed into the returned function
-    // if two strings are passed in, store as key, value pair in storage obj
-    // if one string passed, modify the string to replace any instance of the keys in the storage
-  // return modified string
+// declare function with no inputs
+const censor = () => {
+  // create variable, storage as empty obj
+  let storage = {}
+  // create inner function that will take up to 2 strings
+  const inner = (s1, s2) => {
+    // if string2 input eixsts
+    if (s2) {
+      // use s1 as key and s2 as value within storage variable
+      storage[s1] = s2
+      // break out of if
+    } else {
+      //turn storage's keys as an array and iterate through each value
+      Object.keys(storage).forEach((key) => {
+        // for each value, replace the key with the value
+        s1 = s1.replace(key, storage[key])
+      })
+      // return s1 input
+      return s1
+    }
+  }
+  // return inner function
+  return inner
+}
 
+/************************************************************************/
 
 const censor = () => {
-  let storage = {}
-
-  return function(s1, s2) {
-    if(s2) {
-      storage[s1] = s2
-      return
+  let result = {}
+  const inner = (s1, s2) => {
+    if (s2) {
+      result[s1] = s2
+    } else {
+      for(let property in result) {
+        s1 = s1.replace(property, result[property]);
+      }
+      return s1
     }
-  Object.keys(storage).forEach(key => {
-    s1 = s1.replace(key, storage[key])
-  })
-  return s1
   }
+  return inner;
 }
 
 const changeScene = censor();
