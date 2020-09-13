@@ -324,3 +324,22 @@ const arrayBuilder = (object) => {
 
 console.log(arrayBuilder({ 'cats': 2, 'dogs': 1 })); // => ['cats', 'cats', 'dogs']
 console.log(arrayBuilder({})); // => []
+
+/************************************************************************/
+
+let evenOrOddVals = [1,2,3,5,6,7,8,9,10]
+
+// output { even: [2,4,6], odd: [1,3,5]}
+
+
+// Create a helper function that checks for you and returns either even or odd
+const evenOrOdd = (num) => {
+  return (num % 2 === 0) ? "even" : "odd" 
+}
+
+// will take an array input, initialize acc with the relevant key value pairs
+const sortNums = (array) => {
+  return array.reduce((acc, cur) => {
+    
+  }, {"even": [], "odd": []})
+}

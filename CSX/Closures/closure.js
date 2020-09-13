@@ -70,6 +70,18 @@ addByFour(10); //should return 14
 
 // Write a function once that accepts a callback as input and returns a function. When the returned function is called the first time, it should call the callback and return that output. If it is called any additional times, instead of calling the callback again it will simply return the output value from the first time it was called.
 
+// create a function that takes in another function
+	// hold a result variable
+  // hold a boolean value that checks if the this function has been called already (false)
+  // create inner function that takes in a value
+		// if hasBeenCalled is false
+		// give the result variable the value of callback(input)
+		// reassign hasBeenCalled to true
+  // return inner function
+	// return result
+// end function
+
+
 const once = (callback) => {
   // create result variable
   let result
@@ -153,34 +165,36 @@ setTimeout(() => console.log(count), 1000); // should print '1' after 1 second
   // otherwise return the object
 // return function
 
-const saveOutput = (callback, string) => {
+const saveOutput = (callback, pw) => {
   // instantiate a map variable
-  let map = {}
-
+  let obj = {}
   // instantiate a function that takes in one argument
-  const inner = (pw) => {
+  const inner = (checkPW) => {
     // if string input doesn't equal val input
-    if (string !== pw) {
+    if (pw !== checkPW) {
       // assign output variable to be the result of the callback with val as arg
-      let output = callback(pw)
+      let output = callback(checkPW)
       // output will then equal the key in map
-      map[pw] = output
+      obj[checkPW] = output
       // return output
       return output
       // otherwise return the object
     } else {
-      return map
+      return obj
     }
   }
   // return function
   return inner
 }
 
-const multiplyBy2 = function (num) { return num * 2; };
+const multiplyBy2 =  (num) => { return num * 2; };
+// setting password as 'boo' ===> input will be used as key, value will be key * 2
 const multBy2AndLog = saveOutput(multiplyBy2, 'boo');
-// input will be used as key, value will be key * 2
+// incorrect pass
 console.log(multBy2AndLog(2)); // should log: 4
+// incorrect pass
 console.log(multBy2AndLog(9)); // should log: 18
+// correct pass
 console.log(multBy2AndLog('boo')); // should log: { 2: 4, 9: 18 }
 
 /************************************************************************/
@@ -202,15 +216,16 @@ Instantiate cycleIterator to take in an array input
 */
 
 const cycleIterator = (array) => {
-  let index = 0
-
-  const incrementDay = () => {
-    let result = array[index]
-    index++
-    if(index >= array.length) index = 0
-    return result
+  // create counter variable
+  let counter = 0
+  // create inner function 
+  const inner = () => {
+    // if counter is larger than length of array, reassign counter to 0
+    if (counter >= array.length) counter = 0
+    // return array while incrementing counter
+    return array[counter++]
   }
-  return incrementDay
+  return inner
 }
 
 const threeDayWeekend = ['Fri', 'Sat', 'Sun'];
@@ -219,6 +234,8 @@ console.log(getDay()); // should log: 'Fri'
 console.log(getDay()); // should log: 'Sat'
 console.log(getDay()); // should log: 'Sun'
 console.log(getDay()); // should log: 'Fri'
+
+
 
 /************************************************************************/
 
@@ -302,3 +319,48 @@ const changeScene = censor();
 changeScene('dogs', 'cats');
 changeScene('quick', 'slow');
 console.log(changeScene('The quick, brown fox jumps over the lazy dogs.')); // should log: 'The slow, brown fox jumps over the lazy cats.'
+
+/************************************************************************/
+
+// Create a function that returns user's input every odd iteration and 'Even' at every even iteration
+
+const outter = (input) => {
+  // create counter variable to check if even or odd
+  let counter = 0
+  const inner = () => {
+    // for every function call, counter will increment
+    counter++
+    // return input if values are odd, otherwise return even
+    return (counter % 2 === 1) ? input : 'Even'  
+  }
+  return inner
+}
+
+let hello = oddReturns("Hello World")
+console.log(hello())
+console.log(hello())
+console.log(hello())
+console.log(hello())
+console.log(hello())
+
+/************************************************************************/
+const outter = () => {
+  // previous will hold the starting value
+  let previous = 0 
+  const inner = (val) => {
+    // current will hold onto the previous value
+    let current = previous
+    // reassign previous to val to hold the next value
+    previous = val
+    // return current which is the number 
+    return current
+  }
+  // return inner function
+  return inner
+}
+
+const lastNumber = outter()
+console.log(lastNumber(10)) // 0
+console.log(lastNumber(15)) // 10
+console.log(lastNumber(8)) // 15
+console.log(lastNumber(33)) // 8
