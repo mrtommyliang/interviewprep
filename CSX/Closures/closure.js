@@ -15,16 +15,16 @@ console.log(myFunction()); //should log: 'hello world'
 const score = () => {
   let result = 0
   const incrementScore = () => {
-    result++
+    return result++
   }
   return incrementScore
 }
-result++
+
 const tommysFunction = score()
 const bryansFunction = score()
 
-tommyFunction() //1
-tommyFunction() //2
+tommysFunction() //1
+tommysFunction() //2
 bryansFunction() //1
 
 /************************************************************************/

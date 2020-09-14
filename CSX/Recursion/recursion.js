@@ -65,16 +65,12 @@ console.log(factorial(0)); // -> 1
 
 // Get the length of an array using recursion without accessing its length property.
 
-function getLength(array, count = 0) {
-  if (array.length === 0) {
-    return count
-  }
-  else {
-    count++;
-    array.pop()
-    return getLength(array, count)
-  }
+const getLength = (array, counter = 0) => {
+  if (array.length === counter) return counter
+  return getLength(array, counter + 1)
 }
+
+getLength([1, 2, 3, 4, 5, 6, 7, 8, 10])
 
 console.log(getLength([1])); // -> 1
 console.log(getLength([1, 2])); // -> 2
@@ -93,6 +89,15 @@ function pow(base, exponent) {
   }
 }
 
+const pow2 = (base, exponent, result = 1) => {
+  // if exponent input equals 0, return 1
+  if (exponent === 0) return result
+  // reassign base to equal base * result
+  result *= base
+  // decrement exponent during each function call
+  return pow(base, exponent - 1, result)
+}
+
 console.log(pow(2, 4)); // -> 16
 console.log(pow(3, 5)); // -> 243
 
@@ -100,9 +105,9 @@ console.log(pow(3, 5)); // -> 243
 
 // Write a function that takes an array of functions and a number that will be piped through all those functions. The input number passes through the first function, whose output is passed as input to the second function, whose output is passed as input to the third function, and so on. Use recursion to return the final output of the last function in the array.
 
-function flow(input, funcArray, count = 0) {
+const flow = (input, funcArray, count = 0) => {
   if (count === funcArray.length) return input
-  return flow(funcArray[count](input), funcArray, ++count)
+  return flow(funcArray[count](input), funcArray, count + 1 )
 }
 
 function multiplyBy2(num) { return num * 2; }
@@ -110,4 +115,4 @@ function add7(num) { return num + 7; }
 function modulo4(num) { return num % 4; }
 function subtract10(num) { return num - 10; }
 const arrayOfFunctions = [multiplyBy2, add7, modulo4, subtract10];
-console.log(flow(2, arrayOfFunctions)); // -> -
+console.log(flow(2, arrayOfFunctions)); // -> -7
