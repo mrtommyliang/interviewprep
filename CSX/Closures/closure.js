@@ -364,3 +364,52 @@ console.log(lastNumber(10)) // 0
 console.log(lastNumber(15)) // 10
 console.log(lastNumber(8)) // 15
 console.log(lastNumber(33)) // 8
+
+/************************************************************************/
+/*
+Create a function "checkerLogger" that takes one argument (a function that returns a boolean value). 
+
+The returned function should have the following behavior:
+
+If the function is invoked with an argument, the checker callback function is invoked and its boolean result is returned.
+
+>>> If the function is invoked without any arguments, instead return a count of the number of times the callback function has been invoked and evaluated true or false.
+
+Example:
+const isOdd = num => num % 2 === 1
+const oddCounter = checkerLogger(isOdd);
+oddCounter(); ->  { true: 0, false: 0 }
+oddCounter(3); -> true
+oddCounter(2); ->  false
+oddCounter(); -> { true: 1, false: 1 }
+*/
+
+const isOdd = (num) => {
+  return num % 2 === 1
+}
+
+const checkerLogger = (cb) => {
+  let obj = { true: 0, false: 0 }
+  const inner = (val) => {
+    // if no value is invoked with inner
+    if (!val) {
+      // return the obj
+      return obj
+    } else {
+      // need to hold the callback return value as a key
+      let result = cb(val)
+      // increment the value of the key
+      obj[result]++
+      // return true or false
+      return result
+    }
+  }
+  return inner
+}
+
+
+const oddCounter = checkerLogger(isOdd);
+oddCounter();   //->  { true: 0, false: 0 }
+oddCounter(3);  //-> true
+oddCounter(2);  //->  false
+oddCounter();   //-> { true: 1, false: 1 }

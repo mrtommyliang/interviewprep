@@ -37,7 +37,6 @@ console.log(largestSwap(27), 'largestSwap')
 console.log(largestSwap(72), 'largestSwap')
 
 
-
 /*
 Create a function "countTimes" that takes in two arguments (an array and a search value).
 "countTimes" should return the number of times the search value is present in the array.
