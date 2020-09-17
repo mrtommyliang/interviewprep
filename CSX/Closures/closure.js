@@ -117,13 +117,13 @@ const after = (repeater, callback) => {
   // create counter variable
   let counter = 0
   // create inner function that will take in any amount of inputs
-  const inner = (...args) => {
+  const inner = (val) => {
     // increment counter everytime function is called
     counter++
     // if counter is greater than or equal to the value of repeater
     if (counter >= repeater) {
       // return the callback function with inputs
-      return callback(...args)
+      return callback(val)
     }
   }
   // return inner function defintion
@@ -241,10 +241,11 @@ const cycleIterator = (array) => {
 
 // Create a function defineFirstArg that accepts a function and an argument. Also, the function being passed in will accept at least one argument. defineFirstArg will return a new function that invokes the passed-in function with the passed-in argument as the passed-in function's first argument. Additional arguments needed by the passed-in function will need to be passed into the returned function.
 
-const defineFirstArg = (func, arg) => {
-  return function() {
-    return func(input, ...arguments)
+const defineFirstArg = (cb, ...arg) => {
+  const inner = (...val) => {
+    return cb(...arg, ...val)
   }
+  return inner
 }
 
 const subtract = function(big, small) {return big-small}
