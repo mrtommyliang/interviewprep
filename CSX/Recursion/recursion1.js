@@ -21,13 +21,10 @@ console.log(output);
 
 // Write a function that takes an input character and returns that character repeated 5 times using recursion. For example, if the input is 'g', then the output should be 'ggggg'.
 
-function repeater(char, num) {
-  let string = ''
-  if (string.length >= num) {
-    return string
-  }
-  string += char
-  return repeater(char, num)
+const repeater = (str, num, res = "") => {
+  if (res.length >= num) return res
+  res += str
+  return repeater(str, num, res)
 }
 
 // console.log(repeater('g'));
@@ -116,3 +113,65 @@ function modulo4(num) { return num % 4; }
 function subtract10(num) { return num - 10; }
 const arrayOfFunctions = [multiplyBy2, add7, modulo4, subtract10];
 console.log(flow(2, arrayOfFunctions)); // -> -7
+
+/************************************************************************/
+
+
+// Write a function stringCase that takes a string with mixed uppercase and lowercase characters and
+//   return the string in either all uppercase or all lowercase depending on which letter case the
+//   string has more of. If the string has equal upper and lower case characters, convert the string
+//   to all lowercase. Do not include any loops, native methods (exception: toLowerCase() & toUpperCase() allowed) or the length property.
+// Ex:
+// stringCase('coDe') --> 'code' // lc = 3, uc = 1
+// stringCase('CODe') --> 'CODE'
+// stringCase('coDE') --> 'code'
+
+const stringCase = (string) => {
+  let upper = 0
+  let lower = 0
+  let result = ""
+
+  for (let i = 0; i < string.length; i++) {
+    if (string[i] === string[i].toLowerCase()) {
+      lower++
+    } else {
+      upper++
+    }
+  }
+
+  for (let i = 0; i < string.length; i++) {
+    if (lower >= upper) {
+      result += string[i].toLowerCase()
+    } else {
+      result += string[i].toUpperCase()
+    }
+  }
+  return result
+}
+
+
+// console.log(stringCase('cOdE'))
+// console.log(stringCase('CODe'))
+// console.log(stringCase('coDe'))
+
+
+const stringCaseRecursively = (string, upper = 0, lower = 0, result = "", index = 0) => {
+  if (!string[index]) return result
+  if (string[index] === string[index].toLowerCase()) {
+    lower++
+  } else {
+    upper++
+  }
+
+  if (lower >= upper) {
+    result += string[index].toLowerCase()
+  } else {
+    result += string[index].toUpperCase()
+  }
+  return stringCaseRecursively(string, upper, lower, result, index + 1)
+}
+
+console.log(stringCaseRecursively('cOdE'))
+console.log(stringCaseRecursively('CODe'))
+console.log(stringCaseRecursively('coDe'))
+
