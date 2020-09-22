@@ -232,3 +232,322 @@ const multiply = (x, y, sum = 0) => {
 console.log(multiply(5, 2), "multiply")  // 10
 console.log(multiply(3, 7), "multiply")  // 21
 
+/***************************************************** */
+
+// 13. Write a function that divides two numbers without using the / operator or
+// Math methods to arrive at an approximate quotient (ignore decimal endings).
+
+/*
+overview: dividing a number is just subtracting a number from another a certain amount of times, so we have to subtract x from y until y = 0, assuming that the number is evenly divisible OR until y is less than x
+
+  -> create a result variable that will start at 0 and increment every time the function is run until y === 0 or y < 4
+    -> return result
+  -> function call will be x, y - x, result increments every time the function is run
+
+*/
+
+const divide = (x, y, result = 0) => {
+  if (y === 0 || y < x) return result
+  return divide(x, y - x, result + 1)
+}
+
+console.log(divide(4, 36), "divide") // --> 9
+// console.log(divide(5,36), "divide") // --> 7
+// console.log(divide(2,222), "divide") // --> 111
+
+
+/***************************************************** */
+
+// 14. Find the greatest common divisor (gcd) of two positive numbers. The GCD of two
+// integers is the greatest integer that divides both x and y with no remainder.
+// gcd(4,36); // 4
+// http://www.cse.wustl.edu/~kjg/cse131/Notes/Recursion/recursion.html
+// https://www.khanacademy.org/computing/computer-science/cryptography/modarithmetic/a/the-euclidean-algorithm
+
+const gcd = (x, y) => {
+  if (y === 0) return x
+  return gcd(x, y % x)
+}
+
+console.log(gcd(4, 36), "gcd") // 4)
+
+/***************************************************** */
+
+// 15. Write a function that compares each character of two strings and returns true if both are identical.
+// compareStr('house', 'houses') // false
+// compareStr('tomato', 'tomato') // true
+
+/*
+  overview -> through each function call, remove the first letter of the two string inputs and compare them
+  -> if at any point the string at 0 index doesn't equal each other, return true
+  -> if string input only has one value each, compare the two values
+*/
+
+const compareStr = (str1, str2) => {
+  if (str1.length === 1 && str2.length === 1) {
+    if (str1[0] === str2[0]) {
+      return true;
+    }
+  }
+  if (str1[0] !== str2[0]) {
+    return false;
+  }
+  if (str1[0] === str2[0]) {
+    return compareStr(str1.slice(1), str2.slice(1));
+  }
+}
+console.log(compareStr('house', 'tomato'), "compareStr")
+console.log(compareStr('tomato', 'tomato'), "compareStr")
+console.log(compareStr('house', 'houses'), "compareStr")
+
+/***************************************************** */
+
+// 17. Reverse the order of an array
+
+/*
+  overview: through each function call, we will push the popped value of the array input a result variable. once array's length is 0, we will return the result
+
+  create result which will be a variable as a param that equals empty array
+  create a popped variable the will pop the array but also hold its value
+  push popped into result
+  basecase: if array.length === 0, return result
+
+  function call will take array and result
+*/
+
+const reverseArr = (array, result = []) => {
+  if (array.length === 0) return result
+  let popped = array.pop()
+  result.push(popped)
+  return reverseArr(array, result)
+}
+
+console.log(reverseArr([1, 2, 3, 4, 5]), "reverseArr")
+
+/***************************************************** */
+
+// 18. Create a new array with a given value and length.
+// buildList(0,5) // [0,0,0,0,0]
+// buildList(7,3) // [7,7,7]
+
+/*
+  overview: 
+    through each function call, value will be pushed into result, an empty array. once the length of result is equal to length, result will be returned
+*/
+
+const buildList = (value, length, result = []) => {
+  if (result.length === length) return result
+  result.push(value)
+  return buildList(value, length, result)
+}
+
+console.log(buildList(7, 3), "buildList")
+
+/***************************************************** */
+
+// 19. Implement FizzBuzz. Given integer n, return an array of the string representations of 1 to n.
+// For multiples of three, output 'Fizz' instead of the number.
+// For multiples of five, output 'Buzz' instead of the number.
+// For numbers which are multiples of both three and five, output “FizzBuzz” instead of the number.
+// fizzBuzz(5) // ['1','2','Fizz','4','Buzz']
+
+/*
+  overview: 
+    through each function call, a counter variable will be incremented from 1 until it equals n,
+    -> For multiples of three, output 'Fizz' instead of the number and get pushed into result
+    -> For multiples of five, output 'Buzz' instead of the number and get pushed into result
+    -> For numbers which are multiples of both three and five, output “FizzBuzz” instead of the number and get pushed into result
+    -> Otherwise,  pushed into result
+      base case: if counter === n, return result
+*/
+
+const fizzBuzz = (n, counter = 1, result = []) => {
+  if (counter === n + 1) return result
+  if (counter % 3 === 0 && counter % 5 === 0) result.push("FizzBuzz")
+  else if (counter % 5 === 0) result.push("Buzz")
+  else if (counter % 3 === 0) result.push("Fizz")
+  else result.push("" + counter)
+
+  return fizzBuzz(n, counter + 1, result)
+}
+
+console.log(fizzBuzz(15), "fizzBuzz") // ['1','2','Fizz','4','Buzz']
+
+/***************************************************** */
+
+// 20. Count the occurence of a value in a list.
+// countOccurrence([2,7,4,4,1,4], 4) // 3
+// countOccurrence([2,'banana',4,4,1,'banana'], 'banana') // 2
+
+/*
+ overview: 
+  a popped variable is going to be created that will hold the popped value of the array input
+    if popped value equals the search value, increment a counter variable that will start at 0
+
+  if the original array's length === 0, return counter
+*/
+
+const countOccurrence = (array, value, counter = 0) => {
+  if (array.length === 0) return counter
+  let popped = array.pop()
+  if (popped === value) counter++
+  return countOccurrence(array, value, counter)
+}
+
+console.log(countOccurrence([2, 'banana', 4, 4, 1, 'banana'], 'banana'), "countOccurrence")
+console.log(countOccurrence([2, 7, 4, 4, 1, 4], 5), "countOccurrence")
+
+/***************************************************** */
+
+// 21. Write a recursive version of map.
+// rMap([1,2,3], timesTwo); // [2,4,6]
+
+/*
+  overview: 
+    starting from the first value of array, pass it to the callback function, and whatever that value is, push it into an empty array, result that is a variable as a param
+
+    create a variable shifted that equals array.shift()
+    push into result the vlaue of shifted that will be the value passed into the callacbk
+
+    if the array's length is 0, return result    
+*/
+
+const rMap = (array, callback, result = []) => {
+  if (array.length === 0) return result
+  let shifted = array.shift()
+  result.push(callback(shifted))
+  return rMap(array, callback, result)
+}
+
+const timesTwo = num => num * 2
+
+console.log(rMap([1, 2, 3], timesTwo))
+
+/***************************************************** */
+
+// 22. Write a function that counts the number of times a key occurs in an object.
+var obj = {
+  'e': { 'x': 'y' },
+  't': {
+    'r': { 'e': 'r' },
+    'p': { 'y': 'r' }
+  },
+  'y': 'e'
+};
+
+const countKeysInObj = (obj, key) => {
+  let num = 0
+  for (let property in obj) {
+    if (property === key) {
+      num++
+    }
+    let value = obj[property]
+    if (typeof value === 'object') {
+      num += countKeysInObj(value, key)
+    }
+  }
+  return num
+}
+
+console.log(countKeysInObj(obj, 'r'), 'countKeysInObj') // 1
+console.log(countKeysInObj(obj, 'e'), 'countKeysInObj') // 2
+
+/***************************************************** */
+
+// 25. Get the first n Fibonacci numbers. In the Fibonacci sequence, each subsequent
+// number is the sum of the previous two.
+// Example: 0, 1, 1, 2, 3, 5, 8, 13, 21, 34.....
+// fibonacci(5); // [0,1,1,2,3,5]
+// Note: The 0 is not counted.
+
+/*
+  overview: 
+    to get the next number, you must add the number before it plus the current number where the first two numbers are always 0 and 1
+
+    create an array that will start with 0 and 1
+    
+    base case: the length of the fib array should be n - 1 so i need to continue the function calls until a counter variable equals n, once it does return result array
+
+    through each function call, use counter to keep track of the index, 
+
+    return function (n, increment counter, result)
+*/
+
+const fibonacci = (n, counter = 1, result = [0, 1]) => {
+  if (counter === n) return result
+  let current = result[counter] + result[counter - 1]
+  result.push(current)
+  return fibonacci(n, counter + 1, result)
+}
+
+console.log(fibonacci(5), "fib")
+
+/***************************************************** */
+
+// 26. Return the Fibonacci number located at index n of the Fibonacci sequence.
+// [0,1,1,2,3,5,8,13,21]
+// nthFibo(5); // 5
+// nthFibo(7); // 13
+// nthFibo(3); // 2
+
+/*
+  overview: 
+    to get the next number, you must add the number before it plus the current number where the first two numbers are always 0 and 1
+
+    create an array that will start with 0 and 1
+    
+    base case: the length of the fib array should be n - 1 so i need to continue the function calls until a counter variable equals n, once it does return result array with index of n
+
+    through each function call, use counter to keep track of the index, 
+
+    return function (n, increment counter, result)
+*/
+
+const nthFibo = (n, counter = 1, result = [0, 1]) => {
+  if (counter === n) return result[n]
+  let current = result[counter] + result[counter - 1]
+  result.push(current)
+  return nthFibo(n, counter + 1, result)
+}
+
+console.log(nthFibo(7), "nthFibo")
+
+/***************************************************** */
+
+// 27. Given an array of words, return a new array containing each word capitalized.
+// var words = ['i', 'am', 'learning', 'recursion'];
+// capitalizedWords(words); // ['I', 'AM', 'LEARNING', 'RECURSION']
+
+/*
+  overview: 
+    create an empty array, results that will hold all the values to be returned... this variable will be a param
+    create a variable shifted that will simultaneously remove the first value of array and hold that value
+    through each function call, the upperCased values of shifted will be pushed into result
+    basecase: if array's length is 0, that means we're done with it so we return result
+    function call: function (array, result)
+*/
+
+const capitalizeWords = (array, result = []) => {
+  if (array.length === 0) return result
+  let shifted = (array.shift().toUpperCase())
+  result.push(shifted)
+  return capitalizeWords(array, result)
+}
+let words = ['i', 'am', 'learning', 'recursion']
+console.log(capitalizeWords(words), "capitalizeWords")
+
+/***************************************************** */
+
+// 28. Given an array of strings, capitalize the first letter of each index.
+// capitalizeFirst(['car','poop','banana']); // ['Car','Poop','Banana']
+
+const capitalizeFirst = (array) => {
+  if (array.length === 0) return []
+  let result = capitalizeFirst(array.slice(1, array.length))
+  console.log(result)
+  result.unshift(array[0][0].toUpperCase() + array[0].substring(1))
+  return result
+}
+
+console.log(capitalizeFirst(['car', 'mango', 'banana']), "capitalizeFirst")
+
