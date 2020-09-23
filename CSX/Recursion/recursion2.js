@@ -541,13 +541,171 @@ console.log(capitalizeWords(words), "capitalizeWords")
 // 28. Given an array of strings, capitalize the first letter of each index.
 // capitalizeFirst(['car','poop','banana']); // ['Car','Poop','Banana']
 
-const capitalizeFirst = (array) => {
-  if (array.length === 0) return []
-  let result = capitalizeFirst(array.slice(1, array.length))
-  console.log(result)
-  result.unshift(array[0][0].toUpperCase() + array[0].substring(1))
-  return result
+/*
+  overview: 
+  create a capitalize function that will take a string input and return the capitalize version of that word
+    - charAt(0).toUpperCase() takes the first letter of a string and turns it to an uppercase version of itself
+    - it then concatentates with the remaining letters using the slice method that removes the first letter 
+  within the capitalize first function, i'll be creating a i variable that keeps track of index and result variable which will be an empty array
+    - thorugh each iteration, i will be incremented and passed to array to check its index, the base case will return result when i is equivalent or greater than array's length
+    - through each iteration, a single word in array based off the i variable will be passed to the capitalize function and pushed into result
+    - function call will take in array, incremented i, and result
+*/
+
+const capitalize = (word) => {
+  return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
 }
 
-console.log(capitalizeFirst(['car', 'mango', 'banana']), "capitalizeFirst")
+const capitalizeFirst = (array, i = 0, result = []) => {
+  if (i >= array.length) return result
+  result.push(capitalize(array[i]))
+  return capitalizeFirst(array, i + 1, result);
+}
 
+console.log(capitalizeFirst(['car', 'poop', 'banana']), "capitalizeFirst")
+
+/***************************************************** */
+
+// Initialize the function, with starting offset ("counter") i=0
+console.log(capitalizeFirst(['car', 'poop', 'banana']), "capitalizeFirst")
+
+// 29. Return the sum of all even numbers in an object containing nested objects.
+
+let obj1 = {
+  a: 2,
+  b: { b: 2, bb: { b: 3, bb: { b: 2 } } },
+  c: { c: { c: 2 }, cc: 'ball', ccc: 5 },
+  d: 1,
+  e: { e: { e: 2 }, ee: 'car' }
+};
+
+/* 
+  overview: 
+    create a sum variable that will hold the summed values of evens
+    iterate through the obj using a for in loop to check key value pairs
+      if the value is of the current key is is even, add it to sum
+      if the key contains another object, sum the value of that object through recursive callback to the original function
+    end iteration when it reaches the end of object
+    return sum
+*/
+const nestedEvenSum = (obj) => {
+  let sum = 0;
+  for (let prop in obj) {
+    if (obj[prop] % 2 === 0) sum += obj[prop];
+    if (obj[prop] instanceof Object) sum += nestedEvenSum(obj[prop])
+  }
+  return sum;
+}
+console.log(nestedEvenSum(obj1), "nestedEvenSum")
+
+/***************************************************** */
+
+// 30. Flatten an array containing nested arrays.
+
+/*
+  overview: 
+    flatten function will hold an array argument and will iterate through it to see if there are any subarrays, and if there is, that sub array will then be used as the next argument
+    - each value within array and subarrays will be pushed into an empty array, flattened which will then be returned in the end
+
+    - create a flattened variable
+    - if the array input has no values, return an empty array
+    - iterate through the array
+      - if the value at the current index is an array (meaning its a subarray), pass the value into the flatten function call using the spread operator
+      - otherwise, push the current value into flattened
+    - return flattened  
+*/
+
+const flatten = (array) => {
+  let flattened = []
+  if (array.length === 0) return []
+  for (let i = 0; i < array.length; i++) {
+    if (array[i] instanceof Array) {
+      flattened.push(...flatten(array[i]))
+    } else {
+      flattened.push(array[i])
+    }
+  }
+  return flattened
+}
+
+console.log(flatten([1, [2], [3, [[4]]], 5]), "flatten") // [1,2,3,4,5]
+
+/***************************************************** */
+
+/*
+  overview:
+    iterate through the function using an index variable to keep track of the position that i'm at
+
+    create an empty obj as param,
+    create index variable as param 
+      
+      - go through each string at each index 
+        - if it exists in an obj, 
+          - if it doesn't, create the string as key, and give it a value of one
+          - if it does, increment the value
+    base case: if the index variable is greater than or equal to the string's input return obj
+    function call: return letterTally with string, obj, index, and result
+*/
+
+// 31. Given a string, return an object containing tallies of each letter.
+
+const letterTally = (str, obj, index = 0, result = {}) => {
+  if (index >= str.length) return result
+  if (!result[str[index]]) {
+    result[str[index]] = 1
+  } else {
+    result[str[index]]++
+  }
+  return letterTally(str, obj, index + 1, result)
+}
+console.log(letterTally("potato"), "letterTally") // {p:1, o:2, t:2, a:1}
+
+/***************************************************** */
+
+// 32. Eliminate consecutive duplicates in a list. If the list contains repeated
+// elements they should be replaced with a single copy of the element. The order of the
+// elements should not be changed.
+// compress([1,2,2,3,4,4,5,5,5]) // [1,2,3,4,5]
+// compress([1,2,2,3,4,4,2,5,5,5,4,4]) // [1,2,3,4,2,5,4]
+
+/*
+  overview: 
+    start at the 0 and 1 index and do some comparison, if they don't equal each other, push the "i" index value
+    each comparison will be comparing current and next value starting at 0 index 
+    0 1 // 2 3 // 4 5 // etc
+
+    base case: if "i" is equal to array's length return result
+    if first value and next value are not equivalent, push first value into array
+    function call will take in the array,  result, and incremented i
+*/
+
+const compress = (array, result = [], i = 0) => {
+  if (array.length === i) return result;
+  if (array[i] !== array[i + 1]) result.push(array[i])
+  return compress(array, result, i + 1);
+}
+
+
+console.log(compress([1, 2, 2, 3, 4, 4, 5, 5, 5]), "compress") // [1,2,3,4,5]
+console.log(compress([1,2,2,3,4,4,2,5,5,5,4,4]), "compress") // [1,2,3,4,2,5,4]
+
+/***************************************************** */
+
+// 33. Augment every element in a list with a new value where each element is an array itself.
+
+/*
+  overview: 
+    iterate through each array using an index variable to keep track of position and push aug value into each nested array
+
+    basecase: if index variable is equal to input array's length, return array
+    push aug into array at index position equal to index variable
+    function call takes in array, and increment index variable
+*/
+
+const augmentElements = (array, aug, index = 0) => {
+  if (index >= array.length) return array
+  array[index].push(aug)
+  return augmentElements(array, aug, index + 1)
+}
+
+console.log(augmentElements([[], [3], [7]], 5), "augmentElements") // [[5],[3,5],[7,5]]
