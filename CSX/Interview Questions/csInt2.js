@@ -151,6 +151,7 @@ The returned function should have the following behavior:
 If the function is invoked with an argument, the checker callback function is invoked and its boolean result is returned.
 
 >>> If the function is invoked without any arguments, instead return a count of the number of times the callback function has been invoked and evaluated true or false.
+
 Example:
 const isOdd = num => num % 2 === 1
 const oddCounter = checkerLogger(isOdd);
@@ -160,38 +161,46 @@ oddCounter(2); ->  false
 oddCounter(); -> { true: 1, false: 1 }
 */
 
+/*
+  - if val input doesn't exist, return the obj
+  - if val input does exist, pass it to cb and cb should return true or false
+  - create an obj that holds the true or false
+  - using the true or false as a key, i can increment the value which i'll initialize as 0
+    - whatever the result of the cb with the val is, it gets checked against the key, and since i'm initializing it, i know it exists
 
-const isOdd = (num) => {
-  return num % 2 === 1
-}
-
-const checkerLogger = (arg) => {
-  // create an obj that holds true and false 
-  let obj = { true: 0, false: 0 }
-  // inner function call takes a val input
-  const inner = (val) => {
-    // if the val doesn't exist
-    if (!val) {
-      // return the entire obj
-      return obj
-      // otherwise
-    } else {
-      // create a result variable that will hold callback(val)
-      let result = arg(val)
-      // increment the value of the result variable
+  checkerLogger takes a cb
+    should be an object
+  inner function val
+    if val doesn't exist
+      return an object
+    else 
+      create a result variable that holds cb(val) 
       obj[result]++
-      // return true or false for the passed in val with callback
-      return arg(val)
+      return the obj
+    returns a boolean value using cb and val as the arg
+  return inner
+*/
+
+const checkerLogger = (cb) => {
+  let obj = { true: 0, false: 0 }
+  const inner = (val) => {
+    if (!val) {
+      return obj
+    } else {
+      let result = cb(val)
+      obj[result]++
+      return result
     }
   }
   return inner
 }
 
+const isOdd = num => num % 2 === 1
 const oddCounter = checkerLogger(isOdd);
-console.log(oddCounter(), 'oddCounter') // ->  { true: 0, false: 0 }
-console.log(oddCounter(3), 'oddCounter') //-> true
-console.log(oddCounter(2), 'oddCounter') //->  false
-console.log(oddCounter(), 'oddCounter') //-> { true: 1, false: 1 }
+console.log(oddCounter())   // ->  { true: 0, false: 0 }
+console.log(oddCounter(3))  //  -> true
+console.log(oddCounter(2))  //  ->  false
+console.log(oddCounter())   //  -> { true: 1, false: 1 }
 
 /*
 Create a function "countChar" that takes two arguments (an input string and a target string).

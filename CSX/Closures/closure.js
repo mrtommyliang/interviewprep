@@ -325,13 +325,16 @@ console.log(changeScene('The quick, brown fox jumps over the lazy dogs.')); // s
 
 // Create a function that returns user's input every odd iteration and 'Even' at every even iteration
 
+// need to create a counter variable to see what iteration i'm at, and depending on whether that variable is even or odd, a different output is returned
+
+// create counter variable to check if even or odd
+  // for every function call, counter will increment
+  // return input if values are odd, otherwise return even
+  
 const outter = (input) => {
-  // create counter variable to check if even or odd
   let counter = 0
   const inner = () => {
-    // for every function call, counter will increment
     counter++
-    // return input if values are odd, otherwise return even
     return (counter % 2 === 1) ? input : 'Even'  
   }
   return inner
@@ -345,27 +348,35 @@ console.log(hello())
 console.log(hello())
 
 /************************************************************************/
-const outter = () => {
-  // previous will hold the starting value
-  let previous = 0 
+/*
+  holdPrev will hold no input but will return an inner function
+  create a previous variable that will start at 0 and be returned at the initial function call
+  inner function will hold a val that user inputs
+    a current variable will be equal to previous 
+    reassign previous to equal val 
+    return current variable which is the original number
+  return inner
+
+  overview: 
+    this method will be sort of a two pointer approach where i'll be able to hold user's input for the next function call while also taking in a new value for the next function call
+
+*/
+
+const holdPrev = () => {
+  let previous = 0
   const inner = (val) => {
-    // current will hold onto the previous value
     let current = previous
-    // reassign previous to val to hold the next value
     previous = val
-    // return current which is the number 
     return current
   }
-  // return inner function
   return inner
 }
 
-const lastNumber = outter()
+const lastNumber = holdPrev()
 console.log(lastNumber(10)) // 0
 console.log(lastNumber(15)) // 10
 console.log(lastNumber(8)) // 15
 console.log(lastNumber(33)) // 8
-
 /************************************************************************/
 /*
 Create a function "checkerLogger" that takes one argument (a function that returns a boolean value). 
@@ -384,33 +395,37 @@ oddCounter(3); -> true
 oddCounter(2); ->  false
 oddCounter(); -> { true: 1, false: 1 }
 */
+/*
+  checkerlogger takes a callback
+  create an obj that has true/false key value pairs starting at 0
+  inner takes a arg
+    if arg doesn't exist
+      return obj
+    otherwise 
+      result variable = cb(val) // true/false
+      using result, i pass it to object as key and increment the value
+      return result variable
+  return inner
+*/
 
-const isOdd = (num) => {
-  return num % 2 === 1
-}
+const isOdd = num => num % 2 === 1
 
 const checkerLogger = (cb) => {
   let obj = { true: 0, false: 0 }
   const inner = (val) => {
-    // if no value is invoked with inner
     if (!val) {
-      // return the obj
       return obj
     } else {
-      // need to hold the callback return value as a key
       let result = cb(val)
-      // increment the value of the key
       obj[result]++
-      // return true or false
       return result
     }
   }
   return inner
 }
 
-
 const oddCounter = checkerLogger(isOdd);
-oddCounter();   //->  { true: 0, false: 0 }
-oddCounter(3);  //-> true
-oddCounter(2);  //->  false
-oddCounter();   //-> { true: 1, false: 1 }
+console.log(oddCounter())   //->  { true: 0, false: 0 }
+console.log(oddCounter(3))  //-> true
+console.log(oddCounter(2))  //->  false
+console.log(oddCounter())   //-> { true: 1, false: 1 }
