@@ -52,8 +52,6 @@ console.log(sum([1, 2, 3, 4, 5, 6]), "sum")
 */
 
 const isEven = n => {
-  let even = 0,
-    odd = 1
   if (n === 0) return true
   if (n === 1) return false
   else return isEven(n - 2)
@@ -649,14 +647,14 @@ console.log(flatten([1, [2], [3, [[4]]], 5]), "flatten") // [1,2,3,4,5]
 
 // 31. Given a string, return an object containing tallies of each letter.
 
-const letterTally = (str, obj, index = 0, result = {}) => {
+const letterTally = (str, index = 0, result = {}) => {
   if (index >= str.length) return result
   if (!result[str[index]]) {
     result[str[index]] = 1
   } else {
     result[str[index]]++
   }
-  return letterTally(str, obj, index + 1, result)
+  return letterTally(str, index + 1, result)
 }
 console.log(letterTally("potato"), "letterTally") // {p:1, o:2, t:2, a:1}
 
