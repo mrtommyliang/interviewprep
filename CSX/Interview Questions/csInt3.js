@@ -13,7 +13,7 @@ Create a function "countChars" that takes argument (a string).
 */
 
 
-const countChars = (string) => {
+const countCharsWithoutWhiteSpaces1 = (string) => {
   let noWhiteSpaces = string.replace(/\s+/g, '')
   let counter = 0
   for (let i = 0; i < noWhiteSpaces.length; i++) {
@@ -22,8 +22,17 @@ const countChars = (string) => {
   return counter
 }
 
-console.log(countChars("word"))
-console.log(countChars("word "))
+console.log(countCharsWithoutWhiteSpaces1("word"))
+console.log(countCharsWithoutWhiteSpaces1("word "))
+
+
+const countCharsWithoutWhiteSpaces2 = (string) => {
+  let removed = string.split(" ")
+  return removed.length
+}
+
+console.log(countCharsWithoutWhiteSpaces2("word"), "countCharsWithoutWhiteSpaces")
+console.log(countCharsWithoutWhiteSpaces2("word "), "countCharsWithoutWhiteSpaces")
 
 /*
 Write a function "memoryMaker" that accepts no parameters, and returns a function. Have the returned function accept a value, and every time the returned function is called, return an array of all the previously passed values.
@@ -193,5 +202,21 @@ bestProfit([ 100, 88, 99, 300 ]); // 212
 */
 
 
+const bestProfit = (prices) => {
+  let maxProfit = 0
+  for (let i = 0; i < prices.length - 1; i++) {
+    for (let j = i + 1; j < prices.length; j++) {
+      let profit = prices[j] - prices[i];
+      if (profit > maxProfit)
+        maxProfit = profit;
+    }
+  }
+  return maxProfit;
+}
+
+console.log(bestProfit([100, 1, 123, 120]), "bestProfit")  // 122
+console.log(bestProfit([100, 100, 100, 100]), "bestProfit")   // 0
+console.log(bestProfit([100, 88, 44, 2]), "bestProfit")       // 0
+console.log(bestProfit([100, 88, 99, 300]), "bestProfit")     // 212
 
 
