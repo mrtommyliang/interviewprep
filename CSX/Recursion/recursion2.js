@@ -707,3 +707,172 @@ const augmentElements = (array, aug, index = 0) => {
 }
 
 console.log(augmentElements([[], [3], [7]], 5), "augmentElements") // [[5],[3,5],[7,5]]
+
+/***************************************************** */
+
+// Is Prime Recursively
+// Prime number can only divide evenly by itself or one
+
+/*
+  The idea is to bubble up. Div starts at 2 but if conditions aren't met, div will keep incrementing until num is less than or equal to div, or if div goes into num evenly. The function call will continue to increment until those conditions are met. The bulk of the logic belongs in `if(num <= div)` and `if(num % 2 === 0)` because this will tell the recursive call to keep incrementing until it finds if div goes into num evenly OR if the only other value that divides into itself is itself
+
+  1 false, 2 true, 3 true, 4 false, 5 true, 6 false, 7 true, 8 false, 9 false, 10 false, 11 true
+
+  if input number is 1, return false 
+  if input number is less than or equal to div return true
+  if input number divides evenly into div variable return false
+
+  -> if none of the if conditions are met, increment div until num is less than or greater than div or if num divides into div evenly
+  return the function call with num and incremented div
+*/
+
+
+const isPrime = (num, div = 2) => {
+  if(num === 1) return false
+  if(num <= div) return true
+  if(num % div === 0) return false
+  return isPrime(num, div+1)
+}
+
+console.log(isPrime(1)); //-> false
+console.log(isPrime(2)); //-> true
+console.log(isPrime(3)); //-> true
+console.log(isPrime(4)); //-> false
+
+/***************************************************** */
+
+/*
+  Write a recursive function pathFinder that takes an object and array as inputs and returns the value with the given path.
+
+const obj = {first:{second:{third:"finish"}}, second:{third:"wrong"}};
+const arr = ["first","second","third"];
+pathFinder(obj,arr);   //-> "finish"
+*/
+
+/***************************************************** */
+
+/*
+  Write a recursive function flattenRecursively that flattens a nested array. Your function should be able to handle varying levels of nesting.
+*/
+
+const flattenRecursively = (array) => {
+  let flattened = []
+  for(let vals of array) {
+    if(Array.isArray(vals)){
+      flattened = flattened.concat(flattenRecursively(vals))
+    } else {
+      flattened.push(vals)
+    }
+  }
+  return flattened
+}
+
+
+console.log(flattenRecursively([1, {}, [3, [[4]]]])); //-> [1, {}, 3, 4]
+
+/***************************************************** */
+
+/* 
+  Write a recursive function findInOrderedSet that determines if a number is in an ordered array. 
+  Assume the array is sorted. 
+  BONUS: Write the function in such a way that fully iterating through the array to check isn't necessary.
+*/
+
+const nums = [1, 4, 6, 7, 9, 17, 45];
+
+const findInOrderedSet = (nums, target, i = 0) => {
+  if(!nums.includes(target)) return false
+  if(nums[i] === target) {
+    return true
+  }
+  return findInOrderedSet(nums, target, i+1)
+}
+
+console.log(findInOrderedSet(nums, 4));  //-> true
+console.log(findInOrderedSet(nums, 17));  //-> true
+console.log(findInOrderedSet(nums, 2));  //-> false
+console.log(findInOrderedSet(nums, 46));  //-> false
+
+/***************************************************** */
+
+/*
+  There are n stairs. A person standing at the bottom wants to reach the top.The person can climb either 1 or 2 stairs at a time.
+  Write a function countWaysToReachNthStair to count the number of ways the person can reach the top(order does matter.
+  See test cases for examples.
+*/
+
+const countWaysToReachNthStair = (n) => {
+  if(n === 1) return 1
+  if(n === 2) return 2
+  return countWaysToReachNthStair(n-1) + countWaysToReachNthStair(n-2)
+  return sum
+}
+
+console.log(countWaysToReachNthStair(3)) //-> 3 ((1,1,1), (2,1), (1,2))
+console.log(countWaysToReachNthStair(4)) //-> 5 ((1, 1, 1, 1), (1, 1, 2), (2, 1, 1), (2, 2))
+console.log(countWaysToReachNthStair(5)) 
+console.log(countWaysToReachNthStair(6)) 
+
+/***************************************************** */
+
+// Write a function getRangeBetween that returns an array of all integers between values x and y, not including x and y.
+
+/*
+  Create function getRangeBetween that accepts a start value and an end value as arguments
+    need to iterate through and get the values between x and y so i will need to create a cur variable that will hold keep track of the values starting at the next position of start (start + 1)
+    push that value into a result variable that will be an empty array
+    continue to do this until the current variable is the same as the end value
+    recursively call the function while it accepts starting value, ending value, current value, and result
+
+
+    create a function that accepts, x, y, cur, and res (cur will be one greater than x, res will be an empty array)
+      base case: if cur is the same value as end value, return result array
+      push the value of cur into result
+      recursively call function that accepts x, y, incremented cur, and res
+*/
+
+const getRangeBetween = (x, y, cur = x+1, res = []) => {
+  if(cur === y) return res
+  res.push(cur)
+  return getRangeBetween(x, y, cur+1, res)
+}
+
+console.log(getRangeBetween(2, 9)) //-> [3, 4, 5, 6, 7, 8]
+console.log(getRangeBetween(-5, 5)) //-> [-4, -3, -2, 1, 0, 1, 2, 3, 4]
+
+
+/*
+  Given a collection of distinct integers, return all possible permutations.
+  
+  Input: [1,2,3]
+  
+  Output: [
+    [1,2,3],
+    [1,3,2],
+    [2,1,3],
+    [2,3,1],
+    [3,1,2],
+    [3,2,1]
+  ]
+
+  The idea is to pop the last element and save it. Call permute() on the remaining numbers. Once the recursive call is returned and the permuatations have been generated, inject the popped element between numbers in each permuation and save the new permutation.
+
+  https://bit.ly/3djxDYS
+*/
+
+const permute = (numsArray) => {
+  if (numsArray.length === 0) return [[]];
+  let popped = numsArray.pop();
+  const permutations = permute(numsArray);
+  let result = [];
+  for (vals of permutations) {
+    for (let i = 0; i <= vals.length; i++) {
+      let arrVals = Array.from(vals);
+      arrVals.splice(i, 0, popped);
+      result.push(arrVals);
+    }
+  }
+  return result;
+};
+
+console.log(permute([1,2,3]));

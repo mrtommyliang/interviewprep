@@ -19,32 +19,6 @@ let arr2 = [1, {}, [3, [[4]]]]
 
 /***************************************************************************************/
 
-
-/* 
-  Problem: Push all interger values of a nested object into an array
-
-  create a function that accepts an obj as an argument 
-    create an empty array, result
-    iterate through the object using a for..in loop
-      if the type of the obj's value is the same as type as an integer
-        push the value into an empty array
-      if the value of the object is an Object, pass that value into the function and recursively call it
-        push the value into result
-  return the flattened array
-*/
-
-const valToArray = (obj) => {
-  let result = []
-  for (let i in obj) {
-    if (typeof obj[i] === typeof 1) result.push(obj[i])
-    if (obj[i] instanceof Object) result.push(valToArray(obj[i]))
-  }
-  return flattenArr(result)
-}
-console.log(valToArray(obj1), "nested obj vals")
-
-/***************************************************************************************/
-
 /*
   Problem: flatten an array recursively
 
@@ -75,6 +49,32 @@ const flattenArr = (arr) => {
 }
 
 console.log(flattenArr(arr2), "nested array vals")
+
+
+/***************************************************************************************/
+
+/* 
+  Problem: Push all interger values of a nested object into an array
+
+  create a function that accepts an obj as an argument 
+    create an empty array, result
+    iterate through the object using a for..in loop
+      if the type of the obj's value is the same as type as an integer
+        push the value into an empty array
+      if the value of the object is an Object, pass that value into the function and recursively call it
+        push the value into result
+  return the flattened array
+*/
+
+const valToArray = (obj) => {
+  let result = []
+  for (let i in obj) {
+    if (typeof obj[i] === typeof 1) result.push(obj[i])
+    if (obj[i] instanceof Object) result.push(valToArray(obj[i]))
+  }
+  return flattenArr(result)
+}
+console.log(valToArray(obj1), "nested obj vals")
 
 /***************************************************************************************/
 
