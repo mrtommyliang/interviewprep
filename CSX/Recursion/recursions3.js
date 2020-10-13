@@ -8,8 +8,8 @@ let obj1 = {
 
 let obj2 = {
   1: "a",
-  2: { 3: "b", 4: { 5: "c", 6: { 7: "d" } } },
-  8: { 9: { 10: "e" }, 11: "f", 13: "g" },
+  2: { 3: "b", 4: { 5: "finish", 6: { 7: "d" } } },
+  8: { 9: { 10: "e" }, 11: "f", 13: "finish" },
   14: "h",
   15: { 16: { 17: "i" }, 18: "i" }
 }
@@ -126,4 +126,4 @@ const strFinToArr = (obj, searchVal) => {
   return counter
 }
 
-console.log(strFinToArr(obj2, "finish"), strFinToArr)
+console.log(strFinToArr(obj2, "finish"), "strFinToArr")
