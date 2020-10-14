@@ -383,7 +383,7 @@ const capLastAttempt2 = (str) => str.slice(0, -1) + str.slice(-1).toUpperCase()
 const makeFuncTester = (array) => {
   const inner = (cb) => {
     let result = []
-    for (let i = 0 i < array.length i++) {
+    for (let i = 0; i < array.length; i++) {
       result.push(cb(array[i][0]) === array[i][1])
     }
     return !(result.includes(false))
