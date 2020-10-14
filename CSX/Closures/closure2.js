@@ -60,7 +60,7 @@ console.log(willCounter())
 
 const addByX = (input) => {
   const inner = (val) => {
-    return  val + input
+    return val + input
   }
   return inner
 }
@@ -89,11 +89,11 @@ const once = (cb) => {
   let result
   let hasBeenCalled = false
   const inner = (val) => {
-    if(!hasBeenCalled) {
+    if (!hasBeenCalled) {
       result = cb(val)
       hasBeenCalled = true
     }
-    return result 
+    return result
   }
   return inner
 }
@@ -114,14 +114,14 @@ const after = (count, cb) => {
   let counter = 0
   const inner = () => {
     counter++
-    if(counter === count) {
+    if (counter === count) {
       return cb()
     }
   }
   return inner
 }
 
-const called = function() { console.log('hello') };
+const called = function () { console.log('hello') };
 const afterCalled = after(3, called);
 console.log(afterCalled());
 console.log(afterCalled());
@@ -137,8 +137,8 @@ Write a function rollCall that accepts an array of names and returns a function.
 const rollCall = (array) => {
   let counter = 0
   const inner = () => {
-    if(counter < array.length )console.log(array[counter++]);
-    if(counter === array.length) console.log("Everyone accounted for");
+    if (counter < array.length) console.log(array[counter++]);
+    if (counter === array.length) console.log("Everyone accounted for");
   }
   return inner
 }
@@ -154,8 +154,8 @@ console.log(rollCaller())
 const rollCall2 = (array) => {
   let counter = 0
   const inner = () => {
-    if(counter < array.length) return array[counter++]
-    if(counter >= array.length) return "Everyone accounted for"
+    if (counter < array.length) return array[counter++]
+    if (counter >= array.length) return "Everyone accounted for"
   }
   return inner
 }
@@ -179,7 +179,7 @@ When this happens, the returned function will return an object with all previous
 const saveOutput = (cb, pw) => {
   let obj = {}
   const inner = (val) => {
-    if(val !== pw) {
+    if (val !== pw) {
       obj[val] = cb(val)
       return cb(val)
     } else {
@@ -189,7 +189,7 @@ const saveOutput = (cb, pw) => {
   return inner
 }
 
-const multiplyBy2 = function(num) { return num * 2; };
+const multiplyBy2 = function (num) { return num * 2; };
 const multBy2AndLog = saveOutput(multiplyBy2, 'boo');
 console.log(multBy2AndLog(2)); // => should log 4
 console.log(multBy2AndLog(9)); // => should log 18
@@ -205,7 +205,7 @@ Create a function cycleIterator that accepts an array, and returns a function. T
 const cycleIterator = (array) => {
   let counter = 0
   const inner = () => {
-    if(counter === array.length) counter = 0
+    if (counter === array.length) counter = 0
     return array[counter++]
   }
   return inner
@@ -228,12 +228,12 @@ Create a function defineFirstArg that accepts a function and an argument. Also, 
 
 const defineFirstArg = (cb, ...val) => {
   const inner = (...arg) => {
-    return cb(...val,...arg)
+    return cb(...val, ...arg)
   }
   return inner
 }
 
-const subtract = function(big, small) { return big - small; };
+const subtract = function (big, small) { return big - small; };
 const subFrom20 = defineFirstArg(subtract, 20);
 console.log(subFrom20(5)); // => should log 15
 
@@ -247,10 +247,10 @@ There's no such thing as private properties on a JavaScript object! But, maybe t
 const createSecretHolder = (secret) => {
   let _secret = secret
   return {
-    getSecret: function() {
+    getSecret: function () {
       return _secret
     },
-    setSecret: function(secret) {
+    setSecret: function (secret) {
       _secret = secret
     }
   }
@@ -295,9 +295,9 @@ const russianRoulette = (num) => {
   let counter = 0
   const inner = () => {
     counter++
-    if(num > counter) return "click"
-    if(num === counter) return "bang"
-    if(num < counter) return "reload to play again"
+    if (num > counter) return "click"
+    if (num === counter) return "bang"
+    if (num < counter) return "reload to play again"
   }
   return inner
 }
@@ -314,5 +314,144 @@ console.log(play()); // => should log 'reload to play again'
 
 /*
 Challenge 16
-Create a function average that accepts no arguments, and returns a function (that will accept either a number as its lone argument, or no arguments at all). When the returned function is invoked with a number, the output should be average of all the numbers have ever been passed into that function (duplicate numbers count just like any other number). When the returned function is invoked with no arguments, the current average is outputted. If the returned function is invoked with no arguments before any numbers are passed in, then it should return 0.
+Create a function average that accepts no arguments, and returns a function (that will accept either a number as its lone argument, or no arguments at all). 
+
+When the returned function is invoked with a number, the output should be average of all the numbers have ever been passed into that function (duplicate numbers count just like any other number). 
+
+When the returned function is invoked with no arguments, the current average is outputted. 
+
+If the returned function is invoked with no arguments before any numbers are passed in, then it should return 0.
 */
+
+/*
+  need to create an array of values that will hold onto inputted vals
+  need to create an average variable that will be the averageo of the array
+  if there is no val inputted and there are no inputs within the array return 0
+  if there is no val inputted but there are values within the array, return the average
+  if there is a val arg, push it into the the array and return the average of the array
+*/
+
+const average = () => {
+  let average
+  let args = []
+  const inner = (val) => {
+    if (!val && args.length === 0) {
+      average = 0
+    }
+    if (val) {
+      args.push(val)
+      let total = args.reduce((acc, cur) => {
+        return acc + cur
+      })
+      average = total / args.length
+    }
+    return average
+  }
+  return inner
+}
+
+const avgSoFar = average();
+console.log(avgSoFar());    // => should log 0
+console.log(avgSoFar(4));   // => should log 4
+console.log(avgSoFar(8));   // => should log 6
+console.log(avgSoFar());    // => should log 6
+console.log(avgSoFar(12));  // => should log 8
+console.log(avgSoFar());    // => should log 8
+
+/***************************************************************************************/
+
+/*
+Challenge 17
+Create a function makeFuncTester that accepts an array (of two-element sub-arrays), and returns a function (that will accept a callback). 
+The returned function should return true if the first elements (of each sub-array) being passed into the callback all yield the corresponding second elements (of the same sub-array). Otherwise, the returned function should return false.
+*/
+
+/*
+  iterate through each pair of arrays
+
+*/
+
+const capLastTestCases = [];
+capLastTestCases.push(['hello', 'hellO']);
+capLastTestCases.push(['goodbye', 'goodbyE']);
+capLastTestCases.push(['howdy', 'howdY']);
+const capLastAttempt1 = (str) => str.toUpperCase();
+const capLastAttempt2 = (str) => str.slice(0, -1) + str.slice(-1).toUpperCase();
+
+/***************** APPROACH 1 ******************/
+
+const makeFuncTester = (array) => {
+  const inner = (cb) => {
+    let result = []
+    for (let i = 0; i < array.length; i++) {
+      result.push(cb(array[i][0]) === array[i][1])
+    }
+    return !(result.includes(false))
+  }
+  return inner
+}
+
+/***************** APPROACH 2 ******************/
+
+const makeFuncTester2 = (array) => {
+  const inner = (cb) => {
+    return array.every((pairs) => cb(pairs[0]) === pairs[1])
+  }
+  return inner
+}
+
+const shouldCapitalizeLast = makeFuncTester(capLastTestCases);
+const shouldCapitalizeLast2 = makeFuncTester2(capLastTestCases);
+console.log(shouldCapitalizeLast(capLastAttempt1)); // => should log false
+console.log(shouldCapitalizeLast(capLastAttempt2)); // => should log true
+
+console.log(shouldCapitalizeLast2(capLastAttempt1)); // => should log false
+console.log(shouldCapitalizeLast2(capLastAttempt2)); // => should log true
+
+/***************************************************************************************/
+
+/*
+Challenge 18
+Create a function makeHistory that accepts a number (which will serve as a limit), and returns a function (that will accept a string). The returned function will save a history of the most recent "limit" number of strings passed into the returned function (one per invocation only). Every time a string is passed into the function, the function should return that same string with the word 'done' after it (separated by a space). However, if the string 'undo' is passed into the function, then the function should delete the last action saved in the history, and return that delted string with the word 'undone' after (separated by a space). If 'undo' is passed into the function and the function's history is empty, then the function should return the string 'nothing to undo'.
+*/
+
+/*
+  makehistory function will accept an arg, limit which will be a integer
+    create a memory variable that will be an empty array to hold the inputs
+    inner function will accept an input arg which will be users input
+      if input does not equal undone
+        if memory's length is greater than or equal the limit
+          remove the first value
+          push input into memory
+          return input + "done"
+        else 
+          if memory's length is 0 return "nothing to do"
+          create a remove variable that will remove the last value of the memory array
+          return the remove variable + " undone"
+    
+*/
+
+const makeHistory = (limit) => {
+  let memory = []
+  const inner = (input) => {
+    if (input !== "undo") {
+      if (memory.length > limit) memory.shift();
+      memory.push(input);
+      return input + " done";
+    } else {
+      if (memory.length === 0) return "nothing to do";
+      let remove = memory.pop();
+      return remove + " undone";
+    }
+  }
+  return inner
+}
+const myActions = makeHistory(2);
+console.log(myActions('jump')); // => should log 'jump done'
+console.log(myActions('undo')); // => should log 'jump undone'
+console.log(myActions('walk')); // => should log 'walk done'
+console.log(myActions('code')); // => should log 'code done'
+console.log(myActions('pose')); // => should log 'pose done'
+console.log(myActions('undo')); // => should log 'pose undone'
+console.log(myActions('undo')); // => should log 'code undone'
+console.log(myActions('undo')); // => should log 'nothing to undo'
