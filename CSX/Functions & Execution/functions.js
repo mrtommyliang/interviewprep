@@ -42,7 +42,7 @@ console.log(droids(thrones)) // should log: "These are not the droids you're loo
 
 /************************************************************************/
 // using forEach (forEach cannot break out of execution until completed, so you can't really "return")
-const droids = (array) => {
+const droids2 = (array) => {
   let result = ''
   array.forEach((item) => {
     (item === "Droids") ? result = 'Found Droids!' : result = "These are not the droids you're looking for."
